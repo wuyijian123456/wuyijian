@@ -1,0 +1,17 @@
+# 登录测试数据
+login_success:
+  username: "admin"
+  password: "123456"
+  expected_code: 200
+  expected_msg: "登录成功"
+
+login_fail_wrong_pwd:
+  username: "admin"
+  password: "wrong_pwd"
+  expected_code: 200
+  expected_msg: "密码错误"
+
+# 获取用户信息测试数据
+user_info:
+  expected_keys: ["code", "msg", "data"]
+  expected_data_keys: ["id", "username", "role"]

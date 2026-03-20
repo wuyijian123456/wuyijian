@@ -1,0 +1,11 @@
+{
+  "create_order_success": {
+    "goods_id": 1001,
+    "num": 2,
+    "expected_code": 200,
+    "expected_msg": "创建订单成功"
+  },
+  "cancel_order_success": {
+    "expected_msg": "取消订单成功"
+  }
+}

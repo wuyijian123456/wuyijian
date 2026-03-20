@@ -1,0 +1,10 @@
+requests
+pytest
+pytest-html
+allure-pytest
+pyyaml
+loguru
+openpyxl
+pymysql
+redis
+cryptography
