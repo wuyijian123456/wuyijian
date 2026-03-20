@@ -8,7 +8,7 @@ from common.yaml_util import yaml_util
 
 
 user_data = yaml_util.read_yaml("user_data.yaml")
-print(user_data)
+print("----------------------",user_data)
 
 
 @allure.feature("用户模块")

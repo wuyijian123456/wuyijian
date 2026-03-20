@@ -14,6 +14,7 @@ class RequestHandler:
         full_url = BASE_URL + url if not url.startswith("http") else url
         # 合并默认头和自定义头
         headers = kwargs.pop("headers", {})
+        headers = headers if isinstance(headers, dict) else {}
         headers = {**DEFAULT_HEADERS, **headers}
         # 设置超时
         kwargs.setdefault("timeout", TIMEOUT)
