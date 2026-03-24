@@ -36,7 +36,7 @@ class RequestHandler:
                 headers=headers,
                 **kwargs
             )
-            response.raise_for_status()  # 非200状态码抛出异常
+            # response.raise_for_status()  # 非200状态码抛出异常
 
             log.info(f"响应状态码: {response.status_code}")
             log.info(f"响应内容: {response.text}")

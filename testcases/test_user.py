@@ -1,6 +1,7 @@
 import allure
 import pytest
 from api.user_api import UserApi
+from core import logger
 from core.assert_util import assert_util
 from common.yaml_util import yaml_util
 
@@ -25,7 +26,7 @@ class TestUser:
             assert_util.assert_code(resp, data["expected_code"])
 
         with allure.step("3. 断言响应包含成功提示"):
-            assert_util.assert_contains(resp, data["expected_msg"])
+            assert_util.assert_contains(resp, data["expected_key"])
 
     @allure.story("用户登录")
     @allure.title("密码错误登录失败")

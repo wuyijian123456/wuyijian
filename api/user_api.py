@@ -4,9 +4,9 @@ from core.logger import log
 class UserApi:
     """用户模块接口封装：登录、获取用户信息、修改密码"""
     # 接口路径
-    LOGIN_URL = "/user/login"
-    USER_INFO_URL = "/user/info"
-    UPDATE_PWD_URL = "/user/update_pwd"
+    LOGIN_URL = "/api/oauth/connect/token"
+    USER_INFO_URL = "/api/identity/profile/my"
+    UPDATE_PWD_URL = "/api/identity/my-profile/change-password"
 
     @classmethod
     def login(cls, username, password):
@@ -14,9 +14,15 @@ class UserApi:
         log.info("调用登录接口")
         data = {
             "username": username,
-            "password": password
+            "password": password,
+            "client_id":"vue.client",
+            "client_secret":"",
+            "grant_type":"password",
+            "verifier_code":"",
+            "code_session":""
         }
-        return req.post(cls.LOGIN_URL, json=data)
+        headers ={'content-type':'application/x-www-form-urlencoded'}
+        return req.post(cls.LOGIN_URL, data=data,headers=headers)
 
     @classmethod
     def get_user_info(cls, token):
@@ -34,8 +40,11 @@ class UserApi:
         headers = {
             "Authorization": f"Bearer {token}"
         }
+
         data = {
-            "old_password": old_pwd,
-            "new_password": new_pwd
+            "checkPassword": old_pwd,
+            "currentPassword": new_pwd,
+            "newPassword":new_pwd
         }
-        return req.post(cls.UPDATE_PWD_URL, json=data, headers=headers)
+        params ={'__tenant':'H0002'}
+        return req.post(cls.UPDATE_PWD_URL, json=data, headers=headers,**params)

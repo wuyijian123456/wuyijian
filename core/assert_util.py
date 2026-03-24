@@ -42,8 +42,10 @@ class AssertUtil:
         """断言响应内容包含指定字符串"""
         try:
             assert expected_str in response.text
+            log.info(f"响应内容：'{response.json()}'")
             log.info(f"包含断言成功：响应内容包含'{expected_str}'")
         except AssertionError:
+            log.info(f"响应内容：'{response.text}'")
             log.error(f"包含断言失败：响应内容不包含'{expected_str}'")
             raise
 

@@ -12,7 +12,7 @@ def login_token():
     login_data = yaml_util.read_yaml("user_data.yaml")["login_success"]
     resp = UserApi.login(login_data["username"], login_data["password"])
     # 提取token
-    token = resp.json()["data"]["token"]
+    token = resp.json()["access_token"]
     log.info(f"获取到token：{token}")
     yield token  # 返回token给用例
     log.info("===== 后置操作：清理登录态 =====")

@@ -28,7 +28,7 @@ TIMEOUT = env_config[ACTIVE_ENV]["timeout"]
 # 默认请求头
 DEFAULT_HEADERS = {
     "Content-Type": "application/json",
-    "User-Agent": "ApiAutoTest/1.0"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 }
 
 # 数据库配置（按需启用）
