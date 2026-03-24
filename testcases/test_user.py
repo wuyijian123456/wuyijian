@@ -9,14 +9,15 @@ from common.yaml_util import yaml_util
 
 
 user_data = yaml_util.read_yaml("user_data.yaml")
-print("----------------------",user_data)
+# print("----------------------",user_data)
 
 
 @allure.feature("用户模块")
 class TestUser:
     @allure.story("用户登录")
     @allure.title("正常登录")
-    @pytest.mark.parametrize("data", [user_data["login_success"]])
+    @pytest.mark.parametrize("data", [user_data["login_success"],user_data["login_fail_wrong_pwd"]],ids=["success","fail"])
+    @pytest.mark.order(num=1)
     def test_login_success(self, data):
         """登录成功用例"""
         with allure.step("1. 调用登录接口"):
@@ -28,17 +29,19 @@ class TestUser:
         with allure.step("3. 断言响应包含成功提示"):
             assert_util.assert_contains(resp, data["expected_key"])
 
-    @allure.story("用户登录")
-    @allure.title("密码错误登录失败")
-    @pytest.mark.parametrize("data", [user_data["login_fail_wrong_pwd"]])
-    def test_login_fail(self, data):
-        """登录失败用例"""
-        resp = UserApi.login(data["url"],data["username"], data["password"])
-        assert_util.assert_code(resp, data["expected_code"])
-        assert_util.assert_contains(resp, data["expected_msg"])
+    # @allure.story("用户登录")
+    # @allure.title("密码错误登录失败")
+    # @pytest.mark.parametrize("data", [user_data["login_fail_wrong_pwd"]],ids=["login_fail_wrong_pwd"])
+    # @pytest.mark.order(num =2)
+    # def test_login_fail(self, data):
+    #     """登录失败用例"""
+    #     resp = UserApi.login(data["url"],data["username"], data["password"])
+    #     assert_util.assert_code(resp, data["expected_code"])
+    #     assert_util.assert_contains(resp, data["expected_key"])
 
     @allure.story("获取用户信息")
     @allure.title("带有效token获取用户信息")
+    @pytest.mark.order(num=3)
     def test_get_user_info(self, login_token):
         """获取用户信息用例"""
         resp = UserApi.get_user_info(user_data["user_info"]["url"],login_token)
