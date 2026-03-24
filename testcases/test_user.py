@@ -20,7 +20,7 @@ class TestUser:
     def test_login_success(self, data):
         """登录成功用例"""
         with allure.step("1. 调用登录接口"):
-            resp = UserApi.login(data["username"], data["password"])
+            resp = UserApi.login(data["url"],data["username"], data["password"])
 
         with allure.step("2. 断言响应状态码"):
             assert_util.assert_code(resp, data["expected_code"])
@@ -33,7 +33,7 @@ class TestUser:
     @pytest.mark.parametrize("data", [user_data["login_fail_wrong_pwd"]])
     def test_login_fail(self, data):
         """登录失败用例"""
-        resp = UserApi.login(data["username"], data["password"])
+        resp = UserApi.login(data["url"],data["username"], data["password"])
         assert_util.assert_code(resp, data["expected_code"])
         assert_util.assert_contains(resp, data["expected_msg"])
 
@@ -41,7 +41,7 @@ class TestUser:
     @allure.title("带有效token获取用户信息")
     def test_get_user_info(self, login_token):
         """获取用户信息用例"""
-        resp = UserApi.get_user_info(login_token)
+        resp = UserApi.get_user_info(user_data["user_info"]["url"],login_token)
         # 断言状态码
         assert_util.assert_code(resp, 200)
         # 断言包含指定key

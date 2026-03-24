@@ -1,5 +1,6 @@
 # 登录测试数据
 login_success:
+  url: "/api/oauth/connect/token"
   username: "admin"
   password: "Shangzhe@123"
   expected_code: 200
@@ -7,6 +8,7 @@ login_success:
   expected_key: "access_token"
 
 login_fail_wrong_pwd:
+  url: "/api/oauth/connect/token"
   username: "admin"
   password: "wrong_pwd"
   expected_code: 400
@@ -15,5 +17,6 @@ login_fail_wrong_pwd:
 
 # 获取用户信息测试数据
 user_info:
+  url: "/api/identity/profile/my"
   expected_keys: ["code", "msg", "data"]
   expected_data_keys: ["id", "userName", "normalizedUserName"]
