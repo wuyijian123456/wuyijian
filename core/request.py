@@ -23,7 +23,7 @@ class RequestHandler:
             log.info(f"===== 开始请求 =====")
             log.info(f"请求方法: {method.upper()}")
             log.info(f"请求URL: {full_url}")
-            log.info(f"请求头: {headers}")
+            # log.info(f"请求头: {headers}")
             if "data" in kwargs:
                 log.info(f"表单参数: {kwargs['data']}")
             if "json" in kwargs:
@@ -38,8 +38,8 @@ class RequestHandler:
             )
             # response.raise_for_status()  # 非200状态码抛出异常
 
-            log.info(f"响应状态码: {response.status_code}")
-            log.info(f"响应内容: {response.text}")
+            # log.info(f"响应状态码: {response.status_code}")
+            # log.info(f"响应内容: {response.text}")
             log.info(f"===== 请求结束 =====\n")
             return response
 

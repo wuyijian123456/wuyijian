@@ -1,0 +1,9 @@
+# 获取病人数据
+get_patient_list:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  __tenant: "admin"
+  deptCode: "Shangzhe@123"
+  inDeptState: "true"
+  expected_code: 200
+  expected_msg: "班次未配置"
+  expected_key: "bedSum"

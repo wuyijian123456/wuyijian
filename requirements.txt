@@ -8,3 +8,4 @@ openpyxl
 pymysql
 redis
 cryptography
+jsonpath
