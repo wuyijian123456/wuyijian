@@ -5,10 +5,9 @@ from core.assert_util import assert_util
 from common.yaml_util import yaml_util
 from common.var_replace_util import var_util
 from common.cleanup import CleanUpManager
-from common.data_factory import data_factory
 from core.retry import retry
 from core.error_handler import on_failure
-from core.report_enhancer import ReportEnhancer, performance_monitor
+from core.report_enhancer import performance_monitor
 
 # 读取病人列表测试数据
 try:
@@ -33,41 +32,28 @@ class TestPatientList:
         """根据科室查询在科病人列表"""
         test_name = test_context["test_name"]
         
-        # 生成测试数据（演示）
-        random_dept_code = data_factory.random_string(6).upper()
-        log_info = {
-            "deptCode": patient_info.get("deptCode", ""),
-            "inDeptState": patient_info.get("inDeptState", "true")
-        }
+        with allure.step("1. 准备请求参数"):
+            dept_code = patient_info.get("deptCode", "")
+            in_dept_state = patient_info.get("inDeptState", "true")
+            log.info(f"科室代码：{dept_code}")
+            log.info(f"在科状态：{in_dept_state}")
+            allure.attach(name="请求参数", body=f"科室代码：{dept_code}, 在科状态：{in_dept_state}")
         
-        # 添加请求详情到报告
-        ReportEnhancer.add_request_details(
-            url=patient_info.get("url", ""),
-            method="GET",
-            headers={"Authorization": f"Bearer {login_token[:20]}..."},
-            params=log_info
-        )
-        
-        # 执行请求
-        response = PatientApi.get_patient_list(
-            token=login_token,
-            url=patient_info.get("url", ""),
-            dept_code=patient_info.get("deptCode", ""),
-            in_dept_state=patient_info.get("inDeptState", "true")
-        )
-        
-        # 添加响应详情到报告
-        try:
-            ReportEnhancer.add_response_details(
-                status_code=response.status_code,
-                response_data=response.json()
+        with allure.step("2. 调用查询病人列表接口"):
+            response = PatientApi.get_patient_list(
+                token=login_token,
+                url=patient_info.get("url", ""),
+                dept_code=dept_code,
+                in_dept_state=in_dept_state
             )
-        except:
-            pass
+            allure.attach(name="响应状态码", body=str(response.status_code))
         
-        # 断言
-        assert_util.assert_code(response, patient_info.get("expected_code", 200))
-        assert_util.assert_contains(response, patient_info.get("expected_msg", "操作成功"))
+        with allure.step("3. 断言响应状态码"):
+            assert_util.assert_code(response, patient_info.get("expected_code", 200))
+        
+        with allure.step("4. 断言响应包含成功消息"):
+            assert_util.assert_contains(response, patient_info.get("expected_msg", "操作成功"))
+            allure.attach(name="预期消息", body=patient_info.get("expected_msg", "操作成功"))
         
         # 注册清理任务（如果有需要清理的数据）
         CleanUpManager.register(

@@ -34,7 +34,7 @@ class UserApi:
         return req.get(url, headers=headers)
 
     @classmethod
-    def update_password(cls, url,token, old_pwd, new_pwd):
+    def update_password(cls, url, token, old_pwd, new_pwd):
         """修改密码"""
         log.info("调用修改密码接口")
         headers = {
@@ -44,7 +44,7 @@ class UserApi:
         data = {
             "checkPassword": old_pwd,
             "currentPassword": new_pwd,
-            "newPassword":new_pwd
+            "newPassword": new_pwd
         }
-        params ={'__tenant':'H0002'}
-        return req.post(url, json=data, headers=headers,**params)
+        params = {'__tenant': 'H0002'}
+        return req.post(url, json=data, headers=headers, params=params)
