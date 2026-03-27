@@ -3,3 +3,9 @@ logs/
 __pycache__/
 *.pyc
 report/
+.idea/
+.qoder
+.pytest_cache/
+
+
+

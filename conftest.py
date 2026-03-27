@@ -1,7 +1,7 @@
 import pytest
 from api.user_api import UserApi
 from core.logger import log
-from common.yaml_util import yaml_util
+from common.test_data import TestData
 from common.var_replace_util import var_util
 from common.cleanup import CleanUpManager
 from core.retry import retry, flaky
@@ -15,7 +15,7 @@ def login_token():
     """登录获取 token（全局复用）"""
     log.info("===== 前置操作：登录获取 token =====")
     # 读取登录成功数据
-    login_data = yaml_util.read_yaml("user_data.yaml")["login_success"]
+    login_data = TestData.get("user/test_cases", "login_success")
     resp = UserApi.login(login_data["url"],login_data["username"], login_data["password"])
     # 提取 token
     token = resp.json()["access_token"]
@@ -25,7 +25,7 @@ def login_token():
     var_util.set_var("login_token", token)
     
     yield token  # 返回 token 给用例
-    log.info("===== 后置操作：清理登录态 =====")
+   
 
 
 # 作用域：function（每个用例执行一次）

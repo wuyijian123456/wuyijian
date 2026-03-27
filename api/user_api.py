@@ -3,10 +3,6 @@ from core.logger import log
 
 class UserApi:
     """用户模块接口封装：登录、获取用户信息、修改密码"""
-    # 接口路径
-    # LOGIN_URL = "/api/oauth/connect/token"
-    # USER_INFO_URL = "/api/identity/profile/my"
-    # UPDATE_PWD_URL = "/api/identity/my-profile/change-password"
 
     @classmethod
     def login(cls, url,username, password):

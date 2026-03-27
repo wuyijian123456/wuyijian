@@ -1,0 +1,47 @@
+# 病人模块测试用例数据
+
+# ==================== 查询在科病人列表 ====================
+get_patient_list_success:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  deptCode: "000000"
+  inDeptState: "true"
+  expected_code: 200
+  expected_msg: "操作成功"
+
+# ==================== 不同科室查询 ====================
+get_patient_list_by_dept_nicu:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  deptCode: "172"
+  inDeptState: "true"
+  expected_code: 200
+  expected_msg: "操作成功"
+
+get_patient_list_by_dept_sicu:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  deptCode: "2600"
+  inDeptState: "true"
+  expected_code: 200
+  expected_msg: "操作成功"
+
+# ==================== 查询出院病人 ====================
+get_patient_list_discharged:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  deptCode: "000000"
+  inDeptState: "false"
+  expected_code: 200
+  expected_msg: "操作成功"
+
+# ==================== 空参数查询（异常场景） ====================
+get_patient_list_empty_dept:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  deptCode: ""
+  inDeptState: "true"
+  expected_code: 400
+  expected_msg: "科室代码不能为空"
+
+get_patient_list_invalid_dept:
+  url: "/api/ICIS/Standard/icuPatientRecord/patientCardList"
+  deptCode: "INVALID_CODE"
+  inDeptState: "true"
+  expected_code: 200
+  expected_msg: "未找到相关病人信息"
