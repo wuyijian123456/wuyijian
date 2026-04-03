@@ -18,14 +18,14 @@ def run_test():
     ]
     pytest.main(pytest_args)
 
-    # 2. 生成Allure HTML报告
-    log.info("生成Allure HTML报告...")
-    os.system(f"allure generate {REPORT_DIR / 'xml'} -o {REPORT_DIR / 'html'} --clean")
+    # # 2. 生成Allure HTML报告
+    # log.info("生成Allure HTML报告...")
+    # os.system(f"allure generate {REPORT_DIR / 'xml'} -o {REPORT_DIR / 'html'} --clean")
 
-    # 3. 打开报告（可选）
-    os.system(f"allure serve {REPORT_DIR / 'xml'}")
+    # # 3. 打开报告（可选）
+    # os.system(f"allure serve {REPORT_DIR / 'xml'}")
 
-    log.info(f"===== 测试执行完成，报告路径：{REPORT_DIR / 'html'} =====")
+    # log.info(f"===== 测试执行完成，报告路径：{REPORT_DIR / 'html'} =====")
 
 
 if __name__ == "__main__":

@@ -9,3 +9,5 @@ pymysql
 redis
 cryptography
 jsonpath
+pytest-xdist          # 并行执行，大幅提升效率
+pytest-order          # 控制用例执行顺序
