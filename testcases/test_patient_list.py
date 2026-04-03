@@ -1,8 +1,9 @@
 import allure
 import pytest
+import os
 from api.patient_api import PatientApi
 from core.assert_util import assert_util
-from common.test_data import TestData
+from common.yaml_util import yaml_util
 from common.var_replace_util import var_util
 from common.cleanup import CleanUpManager
 from core.logger import log
@@ -11,7 +12,9 @@ from core.error_handler import on_failure
 from core.report_enhancer import performance_monitor
 
 # 读取病人列表测试数据
-patient_info = TestData.get("patient/test_cases", "get_patient_list_success")
+_patient_yaml_path = os.path.join("patient", "test_cases.yaml")
+_patient_all_data = yaml_util.read_yaml(_patient_yaml_path)
+patient_info = _patient_all_data.get("get_patient_list_success", {})
 
 
 @allure.feature("病人列表管理")
@@ -23,12 +26,12 @@ class TestPatientList:
     @pytest.mark.smoke
     @pytest.mark.P0
     @pytest.mark.parametrize("data", [
-        TestData.get("patient/test_cases", "get_patient_list_success"),
-        TestData.get("patient/test_cases", "get_patient_list_by_dept_nicu"),
-        TestData.get("patient/test_cases", "get_patient_list_by_dept_sicu"),
-        TestData.get("patient/test_cases", "get_patient_list_discharged"),
-        TestData.get("patient/test_cases", "get_patient_list_empty_dept"),
-        TestData.get("patient/test_cases", "get_patient_list_invalid_dept")
+        _patient_all_data.get("get_patient_list_success", {}),
+        _patient_all_data.get("get_patient_list_by_dept_nicu", {}),
+        _patient_all_data.get("get_patient_list_by_dept_sicu", {}),
+        _patient_all_data.get("get_patient_list_discharged", {}),
+        _patient_all_data.get("get_patient_list_empty_dept", {}),
+        _patient_all_data.get("get_patient_list_invalid_dept", {})
     ], ids=["success", "nicu", "sicu", "discharged", "empty_dept", "invalid_dept"])
     @retry(max_attempts=3, delay=1)
     @on_failure

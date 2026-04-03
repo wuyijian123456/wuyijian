@@ -1,10 +1,14 @@
 import allure
 import pytest
+import os
 from api.user_api import UserApi
 from core.logger import log
 from core.assert_util import assert_util
-from common.test_data import TestData
-from common.test_generator import get_test_data
+from common.yaml_util import yaml_util
+
+# 加载用户模块测试数据
+_user_yaml_path = os.path.join("user", "test_cases.yaml")
+_user_all_data = yaml_util.read_yaml(_user_yaml_path)
 
 
 @allure.feature("用户模块")
@@ -13,8 +17,8 @@ class TestUser:
     @allure.story("用户登录")
     @allure.title("正常登录")
     @pytest.mark.parametrize("data", [
-        TestData.get("user/test_cases", "login_success"),
-        TestData.get("user/test_cases", "login_fail_wrong_pwd")
+        _user_all_data.get("login_success", {}),
+        _user_all_data.get("login_fail_wrong_pwd", {})
     ], ids=["success", "fail"])
     @pytest.mark.order(num=1)
     def test_login(self, data):
@@ -42,7 +46,7 @@ class TestUser:
     @pytest.mark.order(num=2)
     def test_get_user_info(self, login_token):
         """获取用户信息测试"""
-        user_info_config = TestData.get("user/test_cases", "get_user_info")
+        user_info_config = _user_all_data.get("get_user_info", {})
         
         with allure.step("1. 准备请求参数"):
             url = user_info_config["url"]
@@ -70,13 +74,12 @@ class TestUser:
     
     @allure.story("修改密码")
     @allure.title("修改密码失败场景测试")
-    @pytest.mark.parametrize("data", get_test_data(
-        "user/test_cases",
-        "update_password_fail_wrong_old_pwd",
-        "update_password_fail_same_as_old",
-        "update_password_fail_too_simple",
-        "update_password_fail_empty_new_pwd"
-    ), ids=["wrong_old_pwd", "same_as_old", "too_simple", "empty_new_pwd"])
+    @pytest.mark.parametrize("data", [
+        _user_all_data.get("update_password_fail_wrong_old_pwd", {}),
+        _user_all_data.get("update_password_fail_same_as_old", {}),
+        _user_all_data.get("update_password_fail_too_simple", {}),
+        _user_all_data.get("update_password_fail_empty_new_pwd", {})
+    ], ids=["wrong_old_pwd", "same_as_old", "too_simple", "empty_new_pwd"])
     @pytest.mark.order(num=3)
     def test_update_password_fail(self, login_token, data):
         """修改密码失败测试（数据驱动）"""

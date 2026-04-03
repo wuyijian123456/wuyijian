@@ -26,6 +26,7 @@ ACTIVE_ENV = env_config.get("active", "test")
 BASE_URL = env_config[ACTIVE_ENV]["base_url"]
 TIMEOUT = env_config[ACTIVE_ENV]["timeout"]
 DB_CONFIG = env_config[ACTIVE_ENV]["mysql"]
+
 # 默认请求头
 DEFAULT_HEADERS = {
     "Content-Type": "application/json",
