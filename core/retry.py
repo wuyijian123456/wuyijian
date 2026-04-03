@@ -3,7 +3,7 @@ from functools import wraps
 from core.logger import log
 
 
-def retry(max_attempts=3, delay=1, backoff=2, exceptions=(Exception,)):
+def retry(max_attempts=2, delay=1, backoff=2, exceptions=(Exception,)):
     """
     失败重试装饰器
     
