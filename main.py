@@ -18,7 +18,7 @@ def run_test():
     ]
     pytest.main(pytest_args)
 
-    # # 2. 生成Allure HTML报告
+    #  2. 生成Allure HTML报告
     # log.info("生成Allure HTML报告...")
     # os.system(f"allure generate {REPORT_DIR / 'xml'} -o {REPORT_DIR / 'html'} --clean")
 
