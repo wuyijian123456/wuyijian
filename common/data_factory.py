@@ -266,3 +266,6 @@ class DataFactory:
 
 # 全局实例
 data_factory = DataFactory()
+
+
+# print(data_factory.create_patient_data())
