@@ -7,7 +7,6 @@ from core.logger import log
 class DBUtil:
     """数据库操作工具类"""
     _instance = None
-    
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
@@ -181,8 +180,7 @@ class DBAssert:
     @staticmethod
     def assert_record_count(table, expected_count, condition="1=1", params=None, message="记录数不匹配"):
         """
-        断言记录数
-        
+        断言记录
         Args:
             table (str): 表名
             expected_count (int): 期望记录数

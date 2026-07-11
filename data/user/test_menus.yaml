@@ -1,0 +1,15 @@
+#菜单用例
+menus_success:
+  url: "/api/user/menus"
+  cookie: "${cookie}"
+  params: ""
+  expected_code: 200
+  expected_key: "质控计划管理"
+
+
+permissions_success:
+  url: "/api/user/permissions"
+  cookie: "${cookie}"
+  params: ""
+  expected_code: 200
+  expected_data: "162cf301-6de8-11f1-ade0-0242ac120006"

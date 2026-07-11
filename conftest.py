@@ -31,12 +31,13 @@ def login_token():
    
 
 
+
+
 # 作用域：function（每个用例执行一次）
 @pytest.fixture(scope="function")
 def test_context(request):
     """
     测试上下文管理器
-    
     提供：
     - 测试名称
     - 变量隔离
@@ -46,23 +47,16 @@ def test_context(request):
     log.info(f"\n{'='*60}")
     log.info(f"开始执行测试：{test_name}")
     log.info(f"{'='*60}")
-    
     # 创建测试级别的上下文
     yield {"test_name": test_name}
-    
     # 清理测试级别的变量
     var_util.clear_test_vars(test_name)
-    
     # 执行注册的清理任务
     CleanUpManager.execute_for_test(test_name)
-    
     log.info(f"测试完成：{test_name}\n")
 
 
 # ==================== Hook 函数 ====================
-
-# 注意：自定义标记已在 pytest.ini 中配置，无需在此重复注册
-
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):

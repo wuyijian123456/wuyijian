@@ -23,7 +23,9 @@ class RequestHandler:
             log.info(f"===== 开始请求 =====")
             log.info(f"请求方法: {method.upper()}")
             log.info(f"请求URL: {full_url}")
-            # log.info(f"请求头: {headers}")
+            log.info(f"请求头: {headers}")
+            if "params" in kwargs:
+                log.info(f"查询参数: {kwargs['params']}")
             if "data" in kwargs:
                 log.info(f"表单参数: {kwargs['data']}")
             if "json" in kwargs:

@@ -1,6 +1,6 @@
 import jsonpath
 from core.logger import log
-from common.var_util import var_util
+from common.var_replace_util import var_util
 
 
 class ResponseExtractor:

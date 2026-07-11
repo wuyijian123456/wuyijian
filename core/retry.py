@@ -43,9 +43,7 @@ def retry(max_attempts=2, delay=1, backoff=2, exceptions=(Exception,)):
                     else:
                         log.error(f"{func.__name__} 达到最大重试次数，最终失败")
                         raise last_exception
-                        
             return None
-            
         return wrapper
     return decorator
 

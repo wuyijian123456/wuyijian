@@ -64,6 +64,7 @@ class VarUtil:
             def replacer(match):
                 var_name = match.group(1)
                 # 先从测试上下文查找，再从全局查找
+
                 value = cls._global_cache.get(var_name, f"${var_name}")
                 return str(value)
             
