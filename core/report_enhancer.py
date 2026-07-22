@@ -15,7 +15,6 @@ class ReportEnhancer:
     def add_attachment(file_path, description=""):
         """
         向 Allure 报告添加附件
-        
         Args:
             file_path (str): 文件路径
             description (str): 描述信息
@@ -201,25 +200,20 @@ class ReportEnhancer:
 def performance_monitor(func):
     """
     性能监控装饰器
-    
     记录函数执行时间
-    
     Args:
         func: 被装饰的函数
     """
     from functools import wraps
-    
     @wraps(func)
     def wrapper(*args, **kwargs):
         start_time = time.time()
         log.debug(f"开始执行：{func.__name__}")
-        
         try:
             result = func(*args, **kwargs)
             duration = time.time() - start_time
             log.info(f"{func.__name__} 执行完成，耗时：{duration:.3f}s")
             return result
-            
         except Exception as e:
             duration = time.time() - start_time
             log.error(f"{func.__name__} 执行失败，耗时：{duration:.3f}s, 错误：{str(e)}")
@@ -270,3 +264,4 @@ class CoverageTracker:
     def clear(cls):
         """清空追踪记录"""
         cls._tracked_tests.clear()
+

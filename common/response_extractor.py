@@ -6,15 +6,12 @@ from common.var_replace_util import var_util
 class ResponseExtractor:
     """
     响应数据提取器（用于接口关联）
-    
     支持从 API 响应中提取数据并保存为变量，供后续接口使用
     """
-    
     @staticmethod
     def extract(response, extraction_rules):
         """
         从响应中提取多个字段
-        
         Args:
             response: requests 响应对象
             extraction_rules (dict): 提取规则 {变量名：JSONPath 表达式}
@@ -48,7 +45,6 @@ class ResponseExtractor:
     def extract_one(response, var_name, json_path):
         """
         提取单个字段
-        
         Args:
             response: requests 响应对象
             var_name (str): 变量名
@@ -60,7 +56,6 @@ class ResponseExtractor:
     def extract_all(response):
         """
         提取整个响应体到变量
-        
         Args:
             response: requests 响应对象
         """
@@ -78,10 +73,8 @@ class ResponseExtractor:
     def replace_vars_in_request(test_data):
         """
         在请求数据中替换变量
-        
         Args:
             test_data (dict): 测试数据（包含 ${var_name} 占位符）
-            
         Returns:
             dict: 替换后的测试数据
         """

@@ -1,7 +1,14 @@
 import requests
 from requests import sessions
-from config.settings import BASE_URL, TIMEOUT, DEFAULT_HEADERS
+from config.settings import BASE_URL, TIMEOUT
 from core.logger import log
+from common.var_replace_util import var_util
+
+# 默认请求头（cookie 改为运行时动态读取）
+DEFAULT_HEADERS = {
+    "Content-Type": "application/json",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+}
 
 class RequestHandler:
     """请求工具类：封装GET/POST/PUT/DELETE，自动处理URL、超时、日志"""
@@ -13,9 +20,14 @@ class RequestHandler:
         # 拼接完整URL
         full_url = BASE_URL + url if not url.startswith("http") else url
         # 合并默认头和自定义头
+        # 设置默认头，并在每次请求时动态读取 cookie
         headers = kwargs.pop("headers", {})
         headers = headers if isinstance(headers, dict) else {}
-        headers = {**DEFAULT_HEADERS, **headers}
+        merged = {**DEFAULT_HEADERS, **headers}
+        runtime_cookie = var_util.get_var("cookie")
+        if runtime_cookie:
+            merged["cookie"] = runtime_cookie
+        headers = merged
         # 设置超时
         kwargs.setdefault("timeout", TIMEOUT)
 
@@ -23,7 +35,7 @@ class RequestHandler:
             log.info(f"===== 开始请求 =====")
             log.info(f"请求方法: {method.upper()}")
             log.info(f"请求URL: {full_url}")
-            log.info(f"请求头: {headers}")
+            log.info(f"请求类型: {headers['Content-Type']}")
             if "params" in kwargs:
                 log.info(f"查询参数: {kwargs['params']}")
             if "data" in kwargs:

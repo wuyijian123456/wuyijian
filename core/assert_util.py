@@ -156,12 +156,14 @@ class DatabaseAssert:
         断言某条记录的某个字段值等于预期
         """
         record = self.query_all(sql, params)
-        list =[]
-        for i in record:
-            if i[field]:
-                list.append(i[field])
+        if field:
+            list = [item[field] for item in record]
+        else:
+            list = list(record.values())[0]
+        log.info(f"===================================================数据库返回字段：{list}")
         assert expected in list
         log.info(msg or f"包含断言成功：响应内容包含{expected}")
+
 
 
 

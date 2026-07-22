@@ -13,3 +13,20 @@ permissions_success:
   params: ""
   expected_code: 200
   expected_data: "162cf301-6de8-11f1-ade0-0242ac120006"
+
+
+departments_success:
+  url: "/api/option/departments"
+  cookie: "${cookie}"
+  params: {"isDept":"True"}
+  expected_code: 200
+  expected_data: "肛肠外科住院"
+
+
+
+departments_noparams_success:
+  url: "/api/option/departments"
+  cookie: "${cookie}"
+  params: ''
+  expected_code: 200
+  expected_data: "临床"

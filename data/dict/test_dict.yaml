@@ -1,0 +1,21 @@
+#菜单用例
+dictionary_item_success:
+  url: "/api/option/dictionary-item-multiple?"
+  cookie: "${cookie}"
+  params:
+    categoryCodes:
+      - politicsStatus
+      - maritalStatus
+      - position
+      - professionalTitle
+      - currentJobLevel
+      - uniformSize
+      - degree
+      - degreeType
+      - educationForm
+      - trainingType
+      - contentType
+      - trainingMode
+      - certLevel
+  expected_code: 200
+  expected_key: "质控计划管理"

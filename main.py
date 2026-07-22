@@ -12,7 +12,7 @@ def run_test():
     # 1. 运行pytest生成Allure原始数据
     pytest_args = [
         "-vs",
-        "testcases",
+        "nurse_testcases",
         f"--alluredir={REPORT_DIR / 'xml'}",
         "--clean-alluredir"  # 清空旧报告
     ]

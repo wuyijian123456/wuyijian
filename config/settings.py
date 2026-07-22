@@ -2,6 +2,7 @@ import yaml
 import os
 from pathlib import Path
 
+
 # 项目根目录
 BASE_DIR = Path(__file__).parent.parent
 # 日志目录
@@ -28,11 +29,6 @@ TIMEOUT = env_config[ACTIVE_ENV]["timeout"]
 DB_CONFIG = env_config[ACTIVE_ENV]["mysql"]
 
 
-# 默认请求头
-DEFAULT_HEADERS = {
-    "Content-Type": "application/json",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
-}
 
 # 数据库配置（按需启用）
 MYSQL_CONFIG = env_config[ACTIVE_ENV].get("mysql", {})
