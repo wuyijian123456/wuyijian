@@ -9,6 +9,7 @@ from common.var_replace_util import var_util
 
 
 
+
 @pytest.fixture(scope="session",autouse=True)
 def login_cookie():
     log.info("通过登录获取cookie")
@@ -18,6 +19,13 @@ def login_cookie():
     cookie = response.headers.get("Set-Cookie")
     var_util.set_var("cookie",cookie)
     yield cookie
+
+
+# def pytest_addoption(parser):
+#     # 不需要 default 参数了
+#     parser.addoption("--env", action="store", help="运行环境：test, prod")
+
+
 
 
 

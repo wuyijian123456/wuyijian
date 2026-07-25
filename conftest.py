@@ -1,6 +1,10 @@
 import pytest
 import os
+
+import yaml
+
 from api.user_api import UserApi
+from config.settings import BASE_DIR
 from core.logger import log
 from common.yaml_util import yaml_util
 from common.var_replace_util import var_util
@@ -62,7 +66,6 @@ def test_context(request):
 def pytest_runtest_makereport(item, call):
     """
     测试运行报告钩子
-    
     用于捕获测试结果，执行后置操作
     """
     # 执行所有其他钩子
@@ -115,3 +118,33 @@ def pytest_addoption(parser):
         default="",
         help="运行指定标签的测试用例"
     )
+
+def pytest_configure(config):
+    env = config.getoption("--env")
+    # 仍然在这里配置环境信息
+    # configs = {
+    #     "test": {"url": "http://test.example.com"},
+    #     "prod": {"url": "https://example.com"}
+    # }
+    with open(BASE_DIR/"config"/"env.yaml",'r',encoding="utf-8") as f:
+        configs  = yaml.safe_load(f)
+    config.env_config = configs.get(env)
+    config.env = env
+
+
+
+@pytest.fixture
+def env(request):
+    return  request.config.env
+
+@pytest.fixture
+def env_config(request):
+    return  request.config.env_config
+
+
+@pytest.fixture
+def configs(env,env_config):
+    return {
+     'env': env,
+     'base_url': env_config["base_url"]
+    }

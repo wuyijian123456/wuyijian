@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da176b8c-ffec-4525-a191-af7b414e5659" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/data/dict/test_dict.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nurse_api/dictionary_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nurse_testcases/test_dict_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/response_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/response_extractor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/conftest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/assert_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/assert_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/report_enhancer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/report_enhancer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/test_menus.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/user/test_menus.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_api/user_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_api/user_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_testcases/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/params_set.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_testcases/test_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/test_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nurse_testcases/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +54,7 @@
     &quot;Python.var_replace_util.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
 }</component>

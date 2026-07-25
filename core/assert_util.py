@@ -156,6 +156,7 @@ class DatabaseAssert:
         断言某条记录的某个字段值等于预期
         """
         record = self.query_all(sql, params)
+
         if field:
             list = [item[field] for item in record]
         else:
