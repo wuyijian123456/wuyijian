@@ -18,6 +18,8 @@ class DBUtil:
                 log.error(f"数据库连接失败：{str(e)}")
                 raise
         return cls._instance
+
+
     
     def query(self, sql, params=None):
         """
@@ -30,6 +32,17 @@ class DBUtil:
         Returns:
             list: 查询结果列表
         """
+
+            # 🔧 处理不同格式的参数
+        if params is None:
+            params = ()
+        elif isinstance(params, str):
+            params = (params,)  # 字符串 → 元组
+        elif isinstance(params, list):
+            params = tuple(params)  # 列表 → 元组
+        elif isinstance(params, dict):
+            # SQLAlchemy 风格：保持字典不变
+            pass
         log.debug(f"执行 SQL: {sql}, 参数：{params}")
         self.cursor.execute(sql, params or ())
         result = self.cursor.fetchall()
@@ -47,6 +60,15 @@ class DBUtil:
         Returns:
             int: 影响的行数
         """
+        if params is None:
+            params = ()
+        elif isinstance(params, str):
+            params = (params,)  # 字符串 → 元组
+        elif isinstance(params, list):
+            params = tuple(params)  # 列表 → 元组
+        elif isinstance(params, dict):
+            # SQLAlchemy 风格：保持字典不变
+            pass
         log.debug(f"执行 SQL: {sql}, 参数：{params}")
         affected_rows = self.cursor.execute(sql, params or ())
         self.conn.commit()
@@ -64,6 +86,15 @@ class DBUtil:
         Returns:
             int: 影响的行数
         """
+        if params_list is None:
+            params = ()
+        elif isinstance(params_list, str):
+            params = (params_list,)  # 字符串 → 元组
+        elif isinstance(params_list, list):
+            params = tuple(params_list)  # 列表 → 元组
+        elif isinstance(params_list, dict):
+            # SQLAlchemy 风格：保持字典不变
+            pass
         log.debug(f"批量执行 SQL: {sql}")
         affected_rows = self.cursor.executemany(sql, params_list)
         self.conn.commit()
@@ -117,102 +148,3 @@ class DBUtil:
 
 # 全局数据库实例
 db = DBUtil()
-
-
-# ==================== 数据库断言工具 ====================
-
-class DBAssert:
-    """数据库断言工具类"""
-    
-    @staticmethod
-    def assert_exists(table, condition, params=None, message="数据不存在"):
-        """
-        断言数据存在
-        
-        Args:
-            table (str): 表名
-            condition (str): WHERE 条件
-            params (tuple/list, optional): 参数
-            message (str): 自定义错误消息
-        """
-        count = db.count(table, condition, params)
-        assert count > 0, f"{message} | 表：{table}, 条件：{condition}"
-        log.info(f"数据库断言通过：在 {table} 中找到 {count} 条记录")
-    
-    @staticmethod
-    def assert_not_exists(table, condition, params=None, message="数据不应存在"):
-        """
-        断言数据不存在
-        
-        Args:
-            table (str): 表名
-            condition (str): WHERE 条件
-            params (tuple/list, optional): 参数
-            message (str): 自定义错误消息
-        """
-        count = db.count(table, condition, params)
-        assert count == 0, f"{message} | 表：{table}, 条件：{condition}"
-        log.info(f"数据库断言通过：在 {table} 中未找到记录")
-    
-    @staticmethod
-    def assert_field_value(table, field, expected_value, condition, params=None, message="字段值不匹配"):
-        """
-        断言字段值
-        
-        Args:
-            table (str): 表名
-            field (str): 字段名
-            expected_value (any): 期望值
-            condition (str): WHERE 条件
-            params (tuple/list, optional): 参数
-            message (str): 自定义错误消息
-        """
-        sql = f"SELECT {field} FROM {table} WHERE {condition} LIMIT 1"
-        result = db.query_one(sql, params)
-        
-        assert result is not None, f"未找到记录 | 表：{table}, 条件：{condition}"
-        actual_value = result.get(field)
-        assert str(actual_value) == str(expected_value), \
-            f"{message} | 字段：{field}, 期望：{expected_value}, 实际：{actual_value}"
-        
-        log.info(f"数据库字段断言通过：{field} = {actual_value}")
-    
-    @staticmethod
-    def assert_record_count(table, expected_count, condition="1=1", params=None, message="记录数不匹配"):
-        """
-        断言记录
-        Args:
-            table (str): 表名
-            expected_count (int): 期望记录数
-            condition (str): WHERE 条件
-            params (tuple/list, optional): 参数
-            message (str): 自定义错误消息
-        """
-        actual_count = db.count(table, condition, params)
-        assert actual_count == expected_count, \
-            f"{message} | 表：{table}, 期望：{expected_count}, 实际：{actual_count}"
-        
-        log.info(f"数据库记录数断言通过：{actual_count} == {expected_count}")
-    
-    @staticmethod
-    def assert_sql_result(sql, assertion_func, params=None, message="SQL 断言失败"):
-        """
-        自定义 SQL 断言
-        
-        Args:
-            sql (str): SQL 查询语句
-            assertion_func (function): 断言函数，接收查询结果作为参数
-            params (tuple/list, optional): 参数
-            message (str): 自定义错误消息
-        """
-        result = db.query(sql, params)
-        try:
-            assertion_func(result)
-            log.info(f"自定义 SQL 断言通过")
-        except AssertionError as e:
-            log.error(f"{message} | SQL: {sql}, 结果：{result}")
-            raise
-
-
-# 全局断言实例
-db_assert = DBAssert()

@@ -70,7 +70,7 @@ class ReportEnhancer:
             log.error(f"添加截图失败：{str(e)}")
     
     @staticmethod
-    def add_request_details(url, method, headers, params):
+    def add_request_details(url, method, headers=None, params=None):
         """
         添加请求详情到报告
         

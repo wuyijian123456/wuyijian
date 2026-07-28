@@ -1,7 +1,7 @@
 #菜单用例
 dictionary_item_success:
   url: "/api/option/dictionary-item-multiple?"
-  cookie: "${cookie}"
+#  cookie: "${cookie}"
   params:
     categoryCodes:
       - politicsStatus
@@ -19,3 +19,26 @@ dictionary_item_success:
       - certLevel
   expected_code: 200
   expected_key: "质控计划管理"
+
+
+
+statistics_success:
+  url: "/api/staff/basic/info/statistics"
+#  cookie: "${cookie}"
+  params: ''
+  expected_code: 200
+  expected_key: "质控计划管理"
+  sql: "select * from qc_check_plan where name = %s"
+  sql_params: '测试计划五五'
+
+category_success:
+  url: "/api/staff/basic/info/statistics"
+  params:
+    skip: 0
+    limit: 20
+  expected_code: 200
+  expected_key: "质控计划管理"
+  sql: "select * from qc_check_plan where name = %s"
+  sql_params: '测试计划五五'
+
+

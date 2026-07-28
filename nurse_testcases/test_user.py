@@ -23,7 +23,6 @@ class Testuser:
             data = var_util.replace(data)
             url = data.get("url")
             params = data.get("params")
-            cookie = data.get("cookie")
             expected_code = data.get("expected_code")
             expected_data = data.get("expected_data")
         with allure.step("2. 调用请求接口"):
@@ -44,7 +43,6 @@ class Testuser:
             data = var_util.replace(data)
             url = data.get("url")
             params = data.get("params",{})
-            cookie = data.get("cookie")
             expected_code = data.get("expected_code")
             expected_data = data.get("expected_data")
 
@@ -67,8 +65,8 @@ class Testuser:
                              ids=['departments_success','departments_noparams_success'])
     def test_department_list(self,data):
         with allure.step("1. 获取测试请求数据"):
-            url, params, data, json, cookie, expected_code, expected_data, sql, sql_params, filed = req_params_Collection(data)
-            ReportEnhancer.add_request_details(url =url, method= 'get', headers={"cookie":cookie}, params=(params,data,json))
+            url, params, data, json, expected_code, expected_data, sql, sql_params, filed = req_params_Collection(data)
+            ReportEnhancer.add_request_details(url =url, method= 'get', params=(params,data,json))
         with allure.step("2. 调用请求接口"):
             resp = Userapi.get_user_departments(url,params)
             ReportEnhancer.add_response_details(resp.status_code,resp.json())
