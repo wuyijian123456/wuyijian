@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da176b8c-ffec-4525-a191-af7b414e5659" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/db_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/db_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/params_set.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/params_set.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/assert_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/assert_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/report_enhancer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/report_enhancer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dict/test_dict.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/dict/test_dict.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_api/dictionary_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_api/dictionary_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_testcases/test_dict_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/test_dict_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_testcases/test_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/test_user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
-    </list>
+    <list default="true" id="da176b8c-ffec-4525-a191-af7b414e5659" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
