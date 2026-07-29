@@ -32,13 +32,59 @@ statistics_success:
   sql_params: '测试计划五五'
 
 category_success:
-  url: "/api/staff/basic/info/statistics"
+  url: "/api/dictionary/category"
   params:
     skip: 0
     limit: 20
   expected_code: 200
-  expected_key: "质控计划管理"
+  expected_key: "性别"
   sql: "select * from qc_check_plan where name = %s"
   sql_params: '测试计划五五'
+
+add_category_success:
+  url: "/api/dictionary/category"
+  data:
+    id: null
+    name: 测试1
+    code: '0'
+    description: '20'
+    sort: 99
+    isEnabled: true
+    isSystem: false
+    isTree: false
+    itemCount: 0
+  expected_code: 200
+  expected_key: "测试1"
+  sql: "select id from sys_dictionary_category where code = %s"
+  sql_params: ''
+
+
+update_category_success:
+  url: "/api/dictionary/category"
+  data:
+    id: "${category_id}"
+    name: 测试123456
+    code: "${category_code}"
+    description: '测试'
+    sort: 99
+    isEnabled: true
+    isSystem: false
+    isTree: false
+    itemCount: 0
+  expected_code: 200
+  expected_key: "${category_id}"
+  sql: "select id from sys_dictionary_category where code = %s"
+  sql_params: ''
+
+
+
+delete_category_success:
+  url: "/api/dictionary/category"
+  data:
+    categoryId: "${category_id}"
+  expected_code: 200
+  expected_key: ""
+  sql: "select id from sys_dictionary_category where code = %s"
+  sql_params: ''
 
 

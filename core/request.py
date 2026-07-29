@@ -1,14 +1,10 @@
 import requests
 from requests import sessions
-from config.settings import BASE_URL, TIMEOUT
+from config.settings import BASE_URL, TIMEOUT,DEFAULT_HEADERS
 from core.logger import log
 from common.var_replace_util import var_util
 
-# 默认请求头（cookie 改为运行时动态读取）
-DEFAULT_HEADERS = {
-    "Content-Type": "application/json",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
-}
+
 
 class RequestHandler:
     """请求工具类：封装GET/POST/PUT/DELETE，自动处理URL、超时、日志"""
@@ -52,8 +48,8 @@ class RequestHandler:
             )
             # response.raise_for_status()  # 非200状态码抛出异常
 
-            # log.info(f"响应状态码: {response.status_code}")
-            # log.info(f"响应内容: {response.text}")
+            log.info(f"响应状态码: {response.status_code}")
+            log.info(f"响应内容: {response.text}")
             log.info(f"===== 请求结束 =====\n")
             return response
 
@@ -73,9 +69,10 @@ class RequestHandler:
         """PUT请求"""
         return self._send("PUT", url, data=data, json=json, headers=headers, **kwargs)
 
-    def delete(self, url, headers=None, **kwargs):
+    def delete(self, url,params=None,data=None,json=None, headers=None, **kwargs):
         """DELETE请求"""
-        return self._send("DELETE", url, headers=headers, **kwargs)
+        return self._send("DELETE", url,params=params, data=data, json=json, headers=headers, **kwargs)
+
 
     def close_session(self):
         """关闭会话"""

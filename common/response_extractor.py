@@ -28,6 +28,7 @@ class ResponseExtractor:
             
             for var_name, json_path in extraction_rules.items():
                 # 使用 jsonpath 提取
+
                 result = jsonpath.jsonpath(json_data, json_path)
                 
                 if result:

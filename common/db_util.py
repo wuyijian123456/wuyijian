@@ -32,7 +32,6 @@ class DBUtil:
         Returns:
             list: 查询结果列表
         """
-
             # 🔧 处理不同格式的参数
         if params is None:
             params = ()

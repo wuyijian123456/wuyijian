@@ -25,6 +25,7 @@ class AssertUtil:
                 log.info(f"JSON Key断言成功：存在key={key}")
         except (AssertionError, ValueError) as e:
             log.error(f"JSON Key断言失败：{str(e)}")
+            log.error(f"响应内容：{response.text[:500]}")
             raise
 
     @staticmethod
@@ -37,6 +38,7 @@ class AssertUtil:
             log.info(f"JSON Value断言成功：{key}={actual_value} == {expected_value}")
         except (AssertionError, ValueError) as e:
             log.error(f"JSON Value断言失败：{str(e)}")
+            log.error(f"响应内容：{response.text[:500]}")
             raise
 
     @staticmethod
@@ -44,10 +46,10 @@ class AssertUtil:
         """断言响应内容包含指定字符串"""
         try:
             assert expected_str in response.text
-            # log.info(f"响应内容：'{response.json()}'")
+            # log.info(f"响应内容：'{response.text[:500]}'")
             log.info(f"包含断言成功：响应内容包含'{expected_str}'")
         except AssertionError:
-            log.info(f"响应内容：'{response.text}'")
+            # log.error(f"响应内容：'{response.text[:500]}'")
             log.error(f"包含断言失败：响应内容不包含'{expected_str}'")
             raise
 
@@ -64,9 +66,8 @@ class DatabaseAssert:
     def assert_row_exists(self, sql, params, msg: Optional[str] = None):
         """断言表中存在满足条件的记录"""
         record = self.db.query_one(sql, params)
-        log.info(f"{sql}, {params},{record}")
         assert record is not None,msg
-        log.info(msg or f"期望记录存在，但未找到满足条件的记录")
+        log.info(msg)
 
     def assert_row_not_exists(self, sql, params, msg: Optional[str] = None):
         """断言不存在满足条件的记录"""
