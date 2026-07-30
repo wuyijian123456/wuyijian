@@ -66,8 +66,9 @@ class DatabaseAssert:
     def assert_row_exists(self, sql, params, msg: Optional[str] = None):
         """断言表中存在满足条件的记录"""
         record = self.db.query_one(sql, params)
+
         assert record is not None,msg
-        log.info(msg)
+        return record
 
     def assert_row_not_exists(self, sql, params, msg: Optional[str] = None):
         """断言不存在满足条件的记录"""
@@ -83,13 +84,14 @@ class DatabaseAssert:
         assert actual == expected
         log.info(msg or f"记录数断言失败: 期望 {expected}, 实际 {actual}")
 
-    def assert_field_value(self,sql, params, expected: Any, msg: Optional[str] = None):
+    def assert_field_value(self,sql, params, filed, expected: Any, msg: Optional[str] = None):
         """
         断言某条记录的某个字段值等于预期
         """
         record = self.db.query_one(sql, params)
-        assert record == expected
-        log.info(msg or f"字段 断言失败: 期望 {expected!r}, 实际 {record}")
+        log.info(f"数据库断言sql的查询值：{sql},{params}")
+        assert record[filed] == expected , msg
+        return record[filed]
 
     def assert_field_contains_value(self,sql, params, field: str, expected: Any, msg: Optional[str] = None):
         """

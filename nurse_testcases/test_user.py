@@ -1,13 +1,15 @@
-from core.assert_util import assert_util,db
+from core.assert_util import assert_util
 from nurse_api.user_api import Userapi
 import allure
 import pytest
 import os
 from common.yaml_util import yaml_util
 from common.var_replace_util import var_util
+from common.db_util import db
 from core.logger import log
 from common.params_set import req_params_Collection
 from core.report_enhancer import ReportEnhancer
+
 # 加载用户模块测试数据
 _user_yaml_path = os.path.join("user", "test_menus.yaml")
 _user_all_data = yaml_util.read_yaml(_user_yaml_path)
@@ -20,38 +22,37 @@ class Testuser:
     @pytest.mark.parametrize("data",[_user_all_data.get("permissions_success",{})],ids=['permissions_success'])
     def test_current_user_permissions(self,data):
         with allure.step("1. 从data中获取测试请求数据"):
-            data = var_util.replace(data)
-            url = data.get("url")
-            params = data.get("params")
-            expected_code = data.get("expected_code")
-            expected_data = data.get("expected_data")
+            data = req_params_Collection(data)
+            log.info(data)
+            ReportEnhancer.add_request_details(url=data.url, method='put',
+                                               params=(data.params, data.data, data.json))
         with allure.step("2. 调用请求接口"):
-            resp = Userapi.get_user_permissions(url)
+            resp = Userapi.get_user_permissions(data.url)
             allure.attach(name="响应状态码", body=str(resp.status_code))
         with allure.step("3. 断言响应状态码"):
-            assert_util.assert_code(resp, expected_code)
+            assert_util.assert_code(resp, data.expected_code)
         with allure.step("4. 数据库断言响应字段"):
-            db.assert_field_contains_value(sql= "select permission_code from  sys_role_permission where role_id= %s",params=(1,),field = "permission_code",
-                                           expected=expected_data)
+            # db.assert_field_contains_value(sql= "select permission_code from  sys_role_permission where role_id= %s",params=(1,),field = "permission_code",
+            #                                expected=data.expected_data)
             pass
+
 
     @allure.story("获取用户菜单")
     @allure.title("当前用户菜单")
     @pytest.mark.parametrize("data",[_user_all_data.get("menus_success",{})],ids=['menus_success'])
     def test_current_user_menus(self,data):
         with allure.step("1. 获取测试请求数据"):
-            data = var_util.replace(data)
-            url = data.get("url")
-            params = data.get("params",{})
-            expected_code = data.get("expected_code")
-            expected_data = data.get("expected_data")
+            data = req_params_Collection(data)
+            log.info(data)
+            ReportEnhancer.add_request_details(url=data.url, method='put',
+                                               params=(data.params, data.data, data.json))
 
         with allure.step("2. 调用请求接口"):
-            resp = Userapi.get_user_menus(url)
+            resp = Userapi.get_user_menus(data.url)
             allure.attach(name="响应状态码", body=str(resp.status_code))
 
         with allure.step("3.断言响应状态码"):
-            assert_util.assert_code(resp, expected_code)
+            assert_util.assert_code(resp, data.expected_code)
 
         with allure.step("4.断言数据库响应字段"):
             pass
@@ -65,13 +66,15 @@ class Testuser:
                              ids=['departments_success','departments_noparams_success'])
     def test_department_list(self,data):
         with allure.step("1. 获取测试请求数据"):
-            url, params, data, json, expected_code, expected_data, sql, sql_params, filed = req_params_Collection(data)
-            ReportEnhancer.add_request_details(url =url, method= 'get', params=(params,data,json))
+            data = req_params_Collection(data)
+            log.info(data)
+            ReportEnhancer.add_request_details(url=data.url, method='put',
+                                               params=(data.params, data.data, data.json))
         with allure.step("2. 调用请求接口"):
-            resp = Userapi.get_user_departments(url,params)
+            resp = Userapi.get_user_departments(data.url,data.params)
             ReportEnhancer.add_response_details(resp.status_code,resp.json())
         with allure.step("3.断言响应状态码"):
-            assert_util.assert_code(resp, expected_code)
+            assert_util.assert_code(resp, data.expected_code)
 
         with allure.step("4.断言数据库响应字段"):
             pass

@@ -31,7 +31,7 @@ statistics_success:
   sql: "select * from qc_check_plan where name = %s"
   sql_params: '测试计划五五'
 
-category_success:
+select_all_category_success:
   url: "/api/dictionary/category"
   params:
     skip: 0
@@ -40,6 +40,18 @@ category_success:
   expected_key: "性别"
   sql: "select * from qc_check_plan where name = %s"
   sql_params: '测试计划五五'
+
+
+select_keyword_category_success:
+  url: "/api/dictionary/category"
+  params:
+    skip: 0
+    limit: 20
+    keyword: 区域
+  expected_code: 200
+  expected_key: "区域"
+  sql: "select count(*) from sys_dictionary_category where name = %s"
+  sql_params: '区域'
 
 add_category_success:
   url: "/api/dictionary/category"
@@ -73,8 +85,9 @@ update_category_success:
     itemCount: 0
   expected_code: 200
   expected_key: "${category_id}"
-  sql: "select id from sys_dictionary_category where code = %s"
-  sql_params: ''
+  sql: "select description from sys_dictionary_category where id = %s"
+  sql_params: "${category_id}"
+  filed: "description"
 
 
 
@@ -84,7 +97,80 @@ delete_category_success:
     categoryId: "${category_id}"
   expected_code: 200
   expected_key: ""
-  sql: "select id from sys_dictionary_category where code = %s"
-  sql_params: ''
+  sql: " select id from sys_dictionary_category where deleted_by ='1' and id = %s"
+  sql_params: "${category_id}"
+  filed: "id"
+
+
+
+
+get_category_item_success:
+  url: "/api/dictionary/item"
+  data:
+    categoryId: "${category_id}"
+  expected_code: 200
+  expected_key: ""
+  sql: " select id from sys_dictionary_item where id = %s"
+  sql_params: "${category_item_id}"
+  filed: "id"
+
+
+
+add_category_item_success:
+  url: "/api/dictionary/item"
+  data:
+    categoryCode: "${category_code}"
+    code: "${category_item_code}"
+    description: '测试'
+    extra: null
+    id: null
+    isDefault: false
+    isEnabled: true
+    name: "${category_item_name}"
+    parentId: null
+    sort: 99
+  expected_code: 200
+  expected_key: ""
+  sql: " select id from sys_dictionary_item where id = %s"
+  sql_params: "${category_item_id}"
+  filed: "id"
+
+
+
+update_category_item_success:
+  url: "/api/dictionary/item"
+  data:
+    categoryCode: "${category_code}"
+    code: "${category_item_code}"
+    description: '测试'
+    extra: null
+    id: "${category_item_id}"
+    isDefault: false
+    isEnabled: true
+    name: "${category_item_name}"
+    parentId: null
+    sort: 99
+  expected_code: 200
+  expected_key: ""
+  sql: " select id from sys_dictionary_item where id = %s"
+  sql_params: "${category_item_id}"
+  filed: "id"
+
+
+
+
+delete_category_item_success:
+  url: "/api/dictionary/item"
+  data:
+    categoryCode: "${category_code}"
+    itemCode: "${category_item_code}"
+  expected_code: 200
+  expected_key: ""
+  sql: " select id from sys_dictionary_item where deleted_by ='1' and id = %s"
+  sql_params: "${category_item_id}"
+  filed: "id"
+
+
+
 
 

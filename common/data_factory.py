@@ -263,6 +263,12 @@ class DataFactory:
         log.debug(f"生成病人数据：{patient_data}")
         return patient_data
 
+    @staticmethod
+    def random_prefix_name(prefix,length=1):
+
+        name = prefix + DataFactory.random_string(length)
+        return name
+
 
 # 全局实例
 data_factory = DataFactory()

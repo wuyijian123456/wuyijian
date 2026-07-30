@@ -34,7 +34,6 @@ class ReportEnhancer:
     def add_step_info(step_name, details=None):
         """
         添加步骤信息到报告
-        
         Args:
             step_name (str): 步骤名称
             details (dict, optional): 详细信息
@@ -156,7 +155,7 @@ class ReportEnhancer:
                 if result:
                     allure.attach(
                         json.dumps(result, ensure_ascii=False, indent=2),
-                        name="查询结果",
+                        name="SQL 查询结果",
                         attachment_type=allure.attachment_type.JSON
                     )
         except Exception as e:

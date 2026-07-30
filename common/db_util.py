@@ -11,7 +11,7 @@ class DBUtil:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             try:
-                cls._instance.conn = pymysql.connect(**DB_CONFIG, charset="utf8mb4")
+                cls._instance.conn = pymysql.connect(**DB_CONFIG, charset="utf8mb4", autocommit=True)
                 cls._instance.cursor = cls._instance.conn.cursor(DictCursor)
                 log.info("数据库连接成功")
             except Exception as e:

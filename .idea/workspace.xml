@@ -8,15 +8,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/data_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/data_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/db_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/db_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/params_set.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/params_set.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/response_extractor.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/response_extractor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/assert_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/assert_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/report_enhancer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/report_enhancer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/request.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/request.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/dict/test_dict.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/dict/test_dict.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nurse_api/dictionary_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_api/dictionary_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse_testcases/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/conftest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nurse_testcases/test_dict_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/test_dict_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nurse_testcases/test_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/nurse_testcases/test_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -267,8 +266,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/nurse_testcases/test_dict_manager.py</url>
-          <line>110</line>
+          <line>114</line>
           <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/nurse_testcases/test_dict_manager.py</url>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/nurse_testcases/test_dict_manager.py</url>
+          <line>241</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
