@@ -106,7 +106,7 @@ delete_category_success:
 
 get_category_item_success:
   url: "/api/dictionary/item"
-  data:
+  params:
     categoryId: "${category_id}"
   expected_code: 200
   expected_key: ""
@@ -118,7 +118,7 @@ get_category_item_success:
 
 add_category_item_success:
   url: "/api/dictionary/item"
-  data:
+  json:
     categoryCode: "${category_code}"
     code: "${category_item_code}"
     description: '测试'
@@ -131,15 +131,15 @@ add_category_item_success:
     sort: 99
   expected_code: 200
   expected_key: ""
-  sql: " select id from sys_dictionary_item where id = %s"
+  sql: " select code from sys_dictionary_item where id = %s"
   sql_params: "${category_item_id}"
-  filed: "id"
+  filed: "code"
 
 
 
 update_category_item_success:
   url: "/api/dictionary/item"
-  data:
+  json:
     categoryCode: "${category_code}"
     code: "${category_item_code}"
     description: '测试'
@@ -161,7 +161,7 @@ update_category_item_success:
 
 delete_category_item_success:
   url: "/api/dictionary/item"
-  data:
+  params:
     categoryCode: "${category_code}"
     itemCode: "${category_item_code}"
   expected_code: 200

@@ -1,5 +1,4 @@
 import json
-import time
 from common.response_extractor import ResponseExtractor
 from common.data_factory import data_factory
 from common.db_util import db
@@ -190,7 +189,7 @@ class TestCategory:
             ReportEnhancer.add_request_details(url=data.url, method='post',params=(data.params, data.data, data.json))
 
         with allure.step("2. 调用请求接口"):
-            resp = CategoryItemApi.add_category_item_data(data.url,json.dumps(data.data, ensure_ascii=False))
+            resp = CategoryItemApi.add_category_item_data(data.url,json.dumps(data.json, ensure_ascii=False))
             ReportEnhancer.add_response_details(resp.status_code,resp.text)
 
         with allure.step("3. 接口响应断言"):
@@ -201,7 +200,7 @@ class TestCategory:
 
         with allure.step("4. 数据库断言响应字段"):
             data.sql_params = var_util.get_var('category_item_id')
-            result = dbAssert.assert_field_value(data.sql,(data.sql_params,), data.filed, data.sql_params)
+            result = dbAssert.assert_field_value(data.sql,(data.sql_params,), data.filed, var_util.get_var("category_item_code"))
             ReportEnhancer.add_sql_details(data.sql, data.sql_params,result)
 
         with allure.step("5. 提取数据,接口关联"):
@@ -219,7 +218,7 @@ class TestCategory:
             ReportEnhancer.add_request_details(url=data.url, method='put',params=(data.params, data.data, data.json))
 
         with allure.step("2. 调用请求接口"):
-            resp = CategoryItemApi.update_category_item_data(data.url,data.data)
+            resp = CategoryItemApi.update_category_item_data(data.url,data.json)
             ReportEnhancer.add_response_details(resp.status_code,resp.text)
 
         with allure.step("3. 接口响应断言"):
@@ -245,7 +244,7 @@ class TestCategory:
             ReportEnhancer.add_request_details(url=data.url, method='get',params=(data.params, data.data, data.json))
 
         with allure.step("2. 调用请求接口"):
-            resp = CategoryItemApi.get_category_item_data(data.url,data.data)
+            resp = CategoryItemApi.get_category_item_data(data.url,data.params)
             ReportEnhancer.add_response_details(resp.status_code,resp.text)
 
         with allure.step("3. 接口响应断言"):
@@ -273,7 +272,7 @@ class TestCategory:
             ReportEnhancer.add_request_details(url=data.url, method='delete',params=(data.params, data.data, data.json))
 
         with allure.step("2. 调用请求接口"):
-            resp = CategoryItemApi.delete_category_item_data(data.url,data.data)
+            resp = CategoryItemApi.delete_category_item_data(data.url,data.params)
             ReportEnhancer.add_response_details(resp.status_code,resp.text)
 
         with allure.step("3. 接口响应断言"):
