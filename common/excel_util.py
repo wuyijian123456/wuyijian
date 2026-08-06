@@ -1,5 +1,5 @@
 import openpyxl
-from config.settings import DATA_DIR
+from config.env_config import DATA_DIR
 from core.logger import log
 
 class ExcelUtil:

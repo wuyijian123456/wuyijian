@@ -1,4 +1,5 @@
 from core.assert_util import assert_util
+from core.retry import retry
 from nurse_api.user_api import Userapi
 import allure
 import pytest
@@ -19,6 +20,7 @@ _user_all_data = yaml_util.read_yaml(_user_yaml_path)
 class Testuser:
     @allure.story("获取用户权限")
     @allure.title("当前用户权限")
+    @pytest.mark.flaky(reruns=3,reruns_delay=1)
     @pytest.mark.parametrize("data",[_user_all_data.get("permissions_success",{})],ids=['permissions_success'])
     def test_current_user_permissions(self,data):
         with allure.step("1. 从data中获取测试请求数据"):

@@ -7,14 +7,12 @@ from core.logger import log
 class RateLimiter:
     """
     速率限制器
-    
     用于控制 API 请求的频率，避免触发限流
     """
     
     def __init__(self, calls_per_second=10):
         """
         初始化速率限制器
-        
         Args:
             calls_per_second (int): 每秒允许的请求数
         """

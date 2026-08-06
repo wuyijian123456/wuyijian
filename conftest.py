@@ -1,10 +1,10 @@
 import pytest
 import os
-
 import yaml
-
+import json
+from pathlib import Path
 from api.user_api import UserApi
-from config.settings import BASE_DIR
+from config.env_config import BASE_DIR, set_active_env
 from core.logger import log
 from common.yaml_util import yaml_util
 from common.var_replace_util import var_util
@@ -12,50 +12,35 @@ from common.cleanup import CleanUpManager
 from core.retry import retry, flaky
 from core.error_handler import on_failure
 
+# 测试结果存储
+test_results = []
+
+
 # ==================== 全局 Fixture ====================
 
-# 作用域：session（整个测试会话只执行一次）
 @pytest.fixture(scope="session")
 def login_token():
     """登录获取 token（全局复用）"""
     log.info("===== 前置操作：登录获取 token =====")
-    # 读取登录成功数据
     yaml_path = os.path.join("user", "test_cases.yaml")
     all_data = yaml_util.read_yaml(yaml_path)
     login_data = all_data.get("login_success", {})
-    resp = UserApi.login(login_data["url"],login_data["username"], login_data["password"])
-    # 提取 token
+    resp = UserApi.login(login_data["url"], login_data["username"], login_data["password"])
     token = resp.json()["access_token"]
     log.info(f"获取到 token：{token}")
-    
-    # 保存到全局变量
     var_util.set_var("login_token", token)
-    
-    yield token  # 返回 token 给用例
-   
+    yield token
 
 
-
-
-# 作用域：function（每个用例执行一次）
 @pytest.fixture(scope="function")
 def test_context(request):
-    """
-    测试上下文管理器
-    提供：
-    - 测试名称
-    - 变量隔离
-    - 自动清理
-    """
+    """测试上下文管理器"""
     test_name = request.node.name
     log.info(f"\n{'='*60}")
     log.info(f"开始执行测试：{test_name}")
     log.info(f"{'='*60}")
-    # 创建测试级别的上下文
     yield {"test_name": test_name}
-    # 清理测试级别的变量
     var_util.clear_test_vars(test_name)
-    # 执行注册的清理任务
     CleanUpManager.execute_for_test(test_name)
     log.info(f"测试完成：{test_name}\n")
 
@@ -64,35 +49,25 @@ def test_context(request):
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    """
-    测试运行报告钩子
-    用于捕获测试结果，执行后置操作
-    """
-    # 执行所有其他钩子
+    """捕获测试结果"""
     outcome = yield
     report = outcome.get_result()
-    
-    # 在测试完成后执行
+
     if report.when == 'call':
+        test_name = item.name
+        status = 'passed' if report.passed else ('failed' if report.failed else 'skipped')
+        duration = report.duration
+
+        test_results.append({
+            'name': test_name,
+            'status': status,
+            'duration': duration
+        })
+
         if report.failed:
-            # 测试失败，可以在这里添加额外处理
-            log.error(f"测试失败：{item.name}")
+            log.error(f"测试失败：{test_name} - {report.longreprtext[:200] if report.longreprtext else ''}")
         elif report.passed:
-            log.info(f"测试通过：{item.name}")
-
-
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_setup(item):
-    """测试 setup 钩子"""
-    log.debug(f"准备测试：{item.name}")
-    yield
-
-
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_teardown(item):
-    """测试 teardown 钩子"""
-    log.debug(f"清理测试：{item.name}")
-    yield
+            log.info(f"测试通过：{test_name}")
 
 
 # ==================== 命令行选项 ====================
@@ -118,33 +93,89 @@ def pytest_addoption(parser):
         default="",
         help="运行指定标签的测试用例"
     )
+    parser.addoption(
+        "--output",
+        action="store",
+        default="test_results.json",
+        help="测试结果输出文件路径"
+    )
+
 
 def pytest_configure(config):
-    env = config.getoption("--env")
-    # 仍然在这里配置环境信息
-    # configs = {
-    #     "test": {"url": "http://test.example.com"},
-    #     "prod": {"url": "https://example.com"}
-    # }
-    with open(BASE_DIR/"config"/"env.yaml",'r',encoding="utf-8") as f:
-        configs  = yaml.safe_load(f)
-    config.env_config = configs.get(env)
+    """初始化环境配置"""
+    env = config.getoption("--env", default="test")
     config.env = env
+    config.env_config = set_active_env(env)
 
+    retry_count = config.getoption("--retry", default=0)
+    os.environ["PYTEST_RETRY"] = str(retry_count)
 
+    log.info(f"环境配置: {env}")
+    log.info(f"重试次数: {retry_count}")
+
+# ==================== 夹具 ====================
 
 @pytest.fixture
 def env(request):
-    return  request.config.env
+    return request.config.env
 
 @pytest.fixture
 def env_config(request):
-    return  request.config.env_config
-
+    return request.config.env_config
 
 @pytest.fixture
-def configs(env,env_config):
-    return {
-     'env': env,
-     'base_url': env_config["base_url"]
+def retry_count(request):
+    return int(os.environ.get("PYTEST_RETRY", "0"))
+
+
+# ==================== 测试结束处理 ====================
+def pytest_collection_finish(session):
+    """收集完成时显示统计"""
+    log.info(f"共收集到 {session.testscollected} 个测试用例")
+
+def pytest_sessionfinish(session, exitstatus):
+    """会话结束时保存测试结果"""
+    output_path = session.config.getoption("--output", default="test_results.json")
+
+    cfg = session.config
+
+    # 计算统计信息
+    total = len(test_results)
+    passed = sum(1 for r in test_results if r['status'] == 'passed')
+    failed = sum(1 for r in test_results if r['status'] == 'failed')
+    skipped = sum(1 for r in test_results if r['status'] == 'skipped')
+    total_duration = sum(r['duration'] for r in test_results)
+
+    # 保存结果
+    result_data = {
+        'environment': {
+            'env': cfg.env,
+            'retry_count': int(os.environ.get("PYTEST_RETRY", "0")),
+            'base_url': cfg.env_config.get('base_url', '')
+        },
+        'summary': {
+            'total': total,
+            'passed': passed,
+            'failed': failed,
+            'skipped': skipped,
+            'total_duration': round(total_duration, 2)
+        },
+        'test_cases': test_results
     }
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(result_data, f, ensure_ascii=False, indent=2)
+
+    log.info(f"\n{'='*60}")
+    log.info(f"测试完成统计:")
+    log.info(f"  总计: {total}")
+    log.info(f"  通过: {passed}")
+    log.info(f"  失败: {failed}")
+    log.info(f"  跳过: {skipped}")
+    log.info(f"  总耗时: {total_duration:.2f}s")
+    log.info(f"  结果文件: {output_path}")
+    log.info(f"{'='*60}")
+
+
+
+

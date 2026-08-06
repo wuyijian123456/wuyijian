@@ -1,6 +1,6 @@
 import pymysql
 from pymysql.cursors import DictCursor
-from config.settings import DB_CONFIG
+from config.env_config import get as env_get
 from core.logger import log
 
 
@@ -11,7 +11,7 @@ class DBUtil:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             try:
-                cls._instance.conn = pymysql.connect(**DB_CONFIG, charset="utf8mb4", autocommit=True)
+                cls._instance.conn = pymysql.connect(**env_get("mysql"), charset="utf8mb4", autocommit=True)
                 cls._instance.cursor = cls._instance.conn.cursor(DictCursor)
                 log.info("数据库连接成功")
             except Exception as e:
@@ -20,15 +20,15 @@ class DBUtil:
         return cls._instance
 
 
-    
+
     def query(self, sql, params=None):
         """
         查询数据
-        
+
         Args:
             sql (str): SQL 查询语句
             params (tuple/list, optional): 参数元组或列表
-            
+
         Returns:
             list: 查询结果列表
         """
@@ -47,15 +47,15 @@ class DBUtil:
         result = self.cursor.fetchall()
         log.debug(f"查询结果：{len(result)} 条记录")
         return result
-    
+
     def execute(self, sql, params=None):
         """
         执行 SQL（INSERT/UPDATE/DELETE）
-        
+
         Args:
             sql (str): SQL 语句
             params (tuple/list, optional): 参数
-            
+
         Returns:
             int: 影响的行数
         """
@@ -73,15 +73,15 @@ class DBUtil:
         self.conn.commit()
         log.info(f"SQL 执行成功，影响行数：{affected_rows}")
         return affected_rows
-    
+
     def executemany(self, sql, params_list):
         """
         批量执行 SQL
-        
+
         Args:
             sql (str): SQL 语句
             params_list (list): 参数列表
-            
+
         Returns:
             int: 影响的行数
         """
@@ -99,37 +99,37 @@ class DBUtil:
         self.conn.commit()
         log.info(f"批量执行成功，影响行数：{affected_rows}")
         return affected_rows
-    
+
     def query_one(self, sql, params=None):
         """
         查询单条数据
-        
+
         Args:
             sql (str): SQL 查询语句
             params (tuple/list, optional): 参数
-            
+
         Returns:
             dict: 单条记录
         """
         result = self.query(sql, params)
         return result[0] if result else None
-    
+
     def count(self, table, condition="1=1", params=None):
         """
         统计表记录数
-        
+
         Args:
             table (str): 表名
             condition (str, optional): WHERE 条件
             params (tuple/list, optional): 参数
-            
+
         Returns:
             int: 记录数
         """
         sql = f"SELECT COUNT(*) as total FROM {table} WHERE {condition}"
         result = self.query_one(sql, params)
         return result['total'] if result else 0
-    
+
     def close(self):
         """关闭连接"""
         if self.cursor:
@@ -137,10 +137,10 @@ class DBUtil:
         if self.conn:
             self.conn.close()
             log.info("数据库连接已关闭")
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
