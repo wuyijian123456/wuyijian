@@ -2,6 +2,7 @@ import random
 import string
 from datetime import datetime, timedelta
 from core.logger import log
+from faker import Faker
 
 
 class DataFactory:
@@ -314,14 +315,22 @@ class DataFactory:
         name = prefix + DataFactory.random_string(length)
         return name
 
+    @staticmethod
+    def random_name():
+        fake = Faker('zh_CN')
+        name = fake.name()
+        date = fake.date_of_birth(minimum_age=18, maximum_age=35).isoformat()
+        profile = fake.simple_profile().get("birthdate")
+        print(profile)
+        return {"name":name,"date":date}
 
 # 全局实例
 data_factory = DataFactory()
 
 
-a = data_factory.random_name_birthday_and_id()
-b = data_factory.random_school_major()
-c = data_factory.random_datetime()
-print(c)
+# a = data_factory.random_name_birthday_and_id()
+# b = data_factory.random_school_major()
+# c = data_factory.random_datetime()
+# print(data_factory.random_name())
 
 

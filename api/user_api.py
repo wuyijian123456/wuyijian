@@ -1,11 +1,13 @@
-from core.request import req
+
 from core.logger import log
 
 class UserApi:
     """用户模块接口封装：登录、获取用户信息、修改密码"""
+    def __init__(self,client):
+        self.client = client
 
-    @classmethod
-    def login(cls, url,username, password):
+
+    def login(self, url,username, password):
         """用户登录"""
         log.info("调用登录接口")
         data = {
@@ -18,19 +20,19 @@ class UserApi:
             "code_session":""
         }
         headers ={'content-type':'application/x-www-form-urlencoded'}
-        return req.post(url, data=data,headers=headers)
+        return self.client.post(url, data=data,headers=headers)
 
-    @classmethod
-    def get_user_info(cls,url, token):
+
+    def get_user_info(self,url, token):
         """获取用户信息（需要token）"""
         log.info("调用获取用户信息接口")
         headers = {
             "Authorization": f"Bearer {token}"
         }
-        return req.get(url, headers=headers)
+        return self.client.get(url, headers=headers)
 
-    @classmethod
-    def update_password(cls, url, token, old_pwd, new_pwd):
+
+    def update_password(self, url, token, old_pwd, new_pwd):
         """修改密码"""
         log.info("调用修改密码接口")
         headers = {
@@ -43,4 +45,4 @@ class UserApi:
             "newPassword": new_pwd
         }
         params = {'__tenant': 'H0002'}
-        return req.post(url, json=data, headers=headers, params=params)
+        return self.client.post(url, json=data, headers=headers, params=params)

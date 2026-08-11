@@ -23,7 +23,7 @@ def run_test(env: str, retry: int, test_path: str, tags: str):
     if tags:
         pytest_args.append(f"--tags={tags}")
 
-
+    log.info(f"===== {pytest_args} =====")
     pytest.main(pytest_args)
 
     log.info("生成Allure HTML报告...")

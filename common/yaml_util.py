@@ -13,6 +13,19 @@ class YamlUtil:
                 data = yaml.safe_load(f)
                 log.info(f"读取YAML文件成功：{file_path}")
                 return data
+        except yaml.YAMLError as e:
+            # 提取错误位置，给出友好提示
+            if hasattr(e, 'problem_mark'):
+                mark = e.problem_mark
+                error_msg = (
+                    f"❌ YAML 格式错误\n"
+                    f"   文件: {file_path}\n"
+                    f"   位置: 第 {mark.line + 1} 行，第 {mark.column + 1} 列\n"
+                    f"   错误: {e.problem}"
+                )
+                raise ValueError(error_msg)
+            raise ValueError(f"YAML 解析失败: {e}")
+
         except Exception as e:
             log.error(f"读取YAML文件失败：{str(e)}")
             raise

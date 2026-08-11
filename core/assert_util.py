@@ -58,8 +58,8 @@ class DatabaseAssert:
     数据库断言工具类
     封装了常见断言方法，复用 DBUtil 全局实例
     """
-    def __init__(self):
-        self.db = DBUtil()  # 复用 DBUtil 全局单例
+    def __init__(self,db):
+        self.db = db
 
     # ---------- 断言方法 ----------
 
@@ -111,6 +111,6 @@ class DatabaseAssert:
 
 # 全局断言实例
 assert_util = AssertUtil()
-dbAssert = DatabaseAssert()
+
 
 

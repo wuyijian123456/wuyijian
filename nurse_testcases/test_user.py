@@ -1,12 +1,10 @@
 from core.assert_util import assert_util
 from core.retry import retry
-from nurse_api.user_api import Userapi
 import allure
 import pytest
 import os
 from common.yaml_util import yaml_util
 from common.var_replace_util import var_util
-from common.db_util import db
 from core.logger import log
 from common.params_set import req_params_Collection
 from core.report_enhancer import ReportEnhancer
@@ -20,16 +18,15 @@ _user_all_data = yaml_util.read_yaml(_user_yaml_path)
 class Testuser:
     @allure.story("获取用户权限")
     @allure.title("当前用户权限")
-    @pytest.mark.flaky(reruns=3,reruns_delay=1)
     @pytest.mark.parametrize("data",[_user_all_data.get("permissions_success",{})],ids=['permissions_success'])
-    def test_current_user_permissions(self,data):
+    def test_current_user_permissions(self,data,user_api):
         with allure.step("1. 从data中获取测试请求数据"):
             data = req_params_Collection(data)
             log.info(data)
             ReportEnhancer.add_request_details(url=data.url, method='put',
                                                params=(data.params, data.data, data.json))
         with allure.step("2. 调用请求接口"):
-            resp = Userapi.get_user_permissions(data.url)
+            resp = user_api.get_user_permissions(data.url)
             allure.attach(name="响应状态码", body=str(resp.status_code))
         with allure.step("3. 断言响应状态码"):
             assert_util.assert_code(resp, data.expected_code)
@@ -42,7 +39,7 @@ class Testuser:
     @allure.story("获取用户菜单")
     @allure.title("当前用户菜单")
     @pytest.mark.parametrize("data",[_user_all_data.get("menus_success",{})],ids=['menus_success'])
-    def test_current_user_menus(self,data):
+    def test_current_user_menus(self,data,user_api):
         with allure.step("1. 获取测试请求数据"):
             data = req_params_Collection(data)
             log.info(data)
@@ -50,7 +47,7 @@ class Testuser:
                                                params=(data.params, data.data, data.json))
 
         with allure.step("2. 调用请求接口"):
-            resp = Userapi.get_user_menus(data.url)
+            resp = user_api.get_user_menus(data.url)
             allure.attach(name="响应状态码", body=str(resp.status_code))
 
         with allure.step("3.断言响应状态码"):
@@ -66,14 +63,14 @@ class Testuser:
     @allure.title("科室列表")
     @pytest.mark.parametrize("data",[_user_all_data.get("departments_success",{}),_user_all_data.get("departments_noparams_success",{})],
                              ids=['departments_success','departments_noparams_success'])
-    def test_department_list(self,data):
+    def test_department_list(self,data,user_api):
         with allure.step("1. 获取测试请求数据"):
             data = req_params_Collection(data)
             log.info(data)
             ReportEnhancer.add_request_details(url=data.url, method='put',
                                                params=(data.params, data.data, data.json))
         with allure.step("2. 调用请求接口"):
-            resp = Userapi.get_user_departments(data.url,data.params)
+            resp = user_api.get_user_departments(data.url,data.params)
             ReportEnhancer.add_response_details(resp.status_code,resp.json())
         with allure.step("3.断言响应状态码"):
             assert_util.assert_code(resp, data.expected_code)

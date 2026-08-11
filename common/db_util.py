@@ -1,23 +1,25 @@
 import pymysql
 from pymysql.cursors import DictCursor
-from config.env_config import get as env_get
 from core.logger import log
 
 
 class DBUtil:
     """数据库操作工具类"""
     _instance = None
-    def __new__(cls):
+    def __new__(cls,env_config_mysql:dict):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             try:
-                cls._instance.conn = pymysql.connect(**env_get("mysql"), charset="utf8mb4", autocommit=True)
+                cls._instance.conn = pymysql.connect(**env_config_mysql, charset="utf8mb4", autocommit=True)
                 cls._instance.cursor = cls._instance.conn.cursor(DictCursor)
                 log.info("数据库连接成功")
             except Exception as e:
                 log.error(f"数据库连接失败：{str(e)}")
                 raise
         return cls._instance
+
+    def __init__(self, env_config_mysql:dict):
+        pass
 
 
 
@@ -145,5 +147,4 @@ class DBUtil:
         self.close()
 
 
-# 全局数据库实例
-db = DBUtil()
+
