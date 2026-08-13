@@ -26,11 +26,11 @@ def run_test(env: str, retry: int, test_path: str, tags: str):
     log.info(f"===== {pytest_args} =====")
     pytest.main(pytest_args)
 
-    log.info("生成Allure HTML报告...")
-    os.system(f"allure generate {REPORT_DIR / 'xml'} -o {REPORT_DIR / 'html'} --clean")
-    os.system(f"allure serve {REPORT_DIR / 'xml'}")
-
-    log.info(f"===== 测试执行完成，报告路径：{REPORT_DIR / 'html'} =====")
+    # log.info("生成Allure HTML报告...")
+    # os.system(f"allure generate {REPORT_DIR / 'xml'} -o {REPORT_DIR / 'html'} --clean")
+    # os.system(f"allure serve {REPORT_DIR / 'xml'}")
+    #
+    # log.info(f"===== 测试执行完成，报告路径：{REPORT_DIR / 'html'} =====")
 
 
 # ==================== 命令行入口 ====================

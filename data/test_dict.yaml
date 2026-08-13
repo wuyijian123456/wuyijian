@@ -24,7 +24,6 @@ dictionary_item_success:
 
 statistics_success:
   url: "/api/staff/basic/info/statistics"
-#  cookie: "${cookie}"
   params: ''
   expected_code: 200
   expected_key: "质控计划管理"

@@ -15,6 +15,20 @@ class AssertUtil:
             log.error(f"状态码断言失败：{actual_code} != {expected_code}")
             raise
 
+
+    @staticmethod
+    def validate_response(response_data, model_class):
+        """统一校验入口，自动处理异常并打印友好信息"""
+        from pydantic import ValidationError
+        try:
+            log.info("响应模型结构校验中")
+            return model_class(**response_data)
+        except ValidationError as e:
+            # 打印详细的错误路径和原因
+            errors = [f"{err['loc']}: {err['msg']}" for err in e.errors()]
+            log.error(f"响应结构校验失败:\n" + "\n".join(errors))
+            raise AssertionError(f"响应结构校验失败:\n" + "\n".join(errors))
+
     @staticmethod
     def assert_json_key(response, *keys):
         """断言JSON响应包含指定key"""
@@ -73,16 +87,15 @@ class DatabaseAssert:
     def assert_row_not_exists(self, sql, params, msg: Optional[str] = None):
         """断言不存在满足条件的记录"""
         record = self.db.query_one(sql, params)
-        assert record is None
-        log.info(msg or f"期望记录不存在，但找到了满足条件的记录")
+        assert record is None,msg
 
     def assert_count_equal(self,sql, params, expected: int, msg: Optional[str] = None):
         """断言满足条件的记录数等于预期值"""
         actual = self.db.count(sql.split('FROM ')[1].strip().split(' ')[0],
                                condition=sql.split('WHERE ')[1] if 'WHERE' in sql else '1=1',
                                params=params)
-        assert actual == expected
-        log.info(msg or f"记录数断言失败: 期望 {expected}, 实际 {actual}")
+        log.info(f"查询总数为：{actual}")
+        assert actual == expected,msg
 
     def assert_field_value(self,sql, params, filed, expected: Any, msg: Optional[str] = None):
         """

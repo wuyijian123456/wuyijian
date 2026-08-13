@@ -1,0 +1,10 @@
+get_intern_rotation_list_success:
+  url: "/api/ntern/rotation"
+  params:
+    skip: 0
+    limit: 20
+    internId: ${internId}
+  expected_code: 200
+  expected_key: "items"
+  sql: "select * from intern_info"
+  sql_params: null

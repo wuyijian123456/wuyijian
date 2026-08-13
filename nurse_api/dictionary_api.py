@@ -1,6 +1,6 @@
 from core.logger import log
 
-class Dictionaryapi:
+class DictionaryApi:
     def __init__(self,client):
         self.client = client
 
@@ -11,7 +11,7 @@ class Dictionaryapi:
         return response
 
 
-class statisticsapi:
+class StatisticsApi:
     def __init__(self,client):
         self.client = client
 
@@ -22,7 +22,7 @@ class statisticsapi:
         return response
 
 
-class categoryapi:
+class CategoryApi:
     def __init__(self,client):
         self.client = client
 

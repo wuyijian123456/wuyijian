@@ -2,7 +2,6 @@ import json
 from common.response_extractor import ResponseExtractor
 from common.data_factory import data_factory
 from core.assert_util import assert_util
-from nurse_api.dictionary_api import Dictionaryapi, statisticsapi, categoryapi, CategoryItemApi
 import allure
 import pytest
 import os
@@ -46,7 +45,7 @@ class TestStatistics:
     @allure.story("获取字典")
     @allure.title("根据codes获取字典")
     @pytest.mark.parametrize("data",[_dict_all_data.get("statistics_success",{})],ids=['statistics_success'])
-    def test_Statistics_data(self,data,statistics_api,db_assert):
+    def test_statistics_data(self,data,statistics_api,db_assert):
         with allure.step("1. 从data中获取测试请求数据"):
             data = req_params_Collection(data)
             ReportEnhancer.add_request_details(url=data.url, method='get',

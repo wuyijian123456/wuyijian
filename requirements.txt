@@ -3,6 +3,7 @@ pytest
 pytest-html
 allure-pytest
 pyyaml
+pydantic
 loguru
 openpyxl
 pymysql

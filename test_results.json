@@ -5,87 +5,22 @@
     "base_url": "http://10.10.100.102:8090"
   },
   "summary": {
-    "total": 15,
-    "passed": 15,
+    "total": 2,
+    "passed": 2,
     "failed": 0,
     "skipped": 0,
-    "total_duration": 0.46
+    "total_duration": 0.04
   },
   "test_cases": [
     {
-      "name": "test_current_user_permissions[dictionary_success]",
+      "name": "test_get_intern_info_by_keyword[get_intern_list_by_keyword]",
       "status": "passed",
-      "duration": 0.04606149999999998
+      "duration": 0.02752370000000015
     },
     {
-      "name": "test_Statistics_data[statistics_success]",
+      "name": "test_get_intern_info_by_keyword[get_intern_list_by_keyword_schoolname]",
       "status": "passed",
-      "duration": 0.01715729999999982
-    },
-    {
-      "name": "test_category_data[select_all_category_success]",
-      "status": "passed",
-      "duration": 0.032744499999999954
-    },
-    {
-      "name": "test_category_data[select_keyword_category_success]",
-      "status": "passed",
-      "duration": 0.015653300000000092
-    },
-    {
-      "name": "test_add_category_data[add_category_success]",
-      "status": "passed",
-      "duration": 0.04575439999999986
-    },
-    {
-      "name": "test_update_category_data[update_category_success]",
-      "status": "passed",
-      "duration": 0.052326799999999896
-    },
-    {
-      "name": "test_add_category_item_data[add_category_item_success]",
-      "status": "passed",
-      "duration": 0.046781299999999915
-    },
-    {
-      "name": "test_update_category_item_data[update_category_item_success]",
-      "status": "passed",
-      "duration": 0.02288660000000009
-    },
-    {
-      "name": "test_get_category_item_data[get_category_item_success]",
-      "status": "passed",
-      "duration": 0.01775529999999992
-    },
-    {
-      "name": "test_delete_category_item_data[delete_category_item_success]",
-      "status": "passed",
-      "duration": 0.062239799999999956
-    },
-    {
-      "name": "test_current_user_permissions[permissions_success]",
-      "status": "passed",
-      "duration": 0.009313600000000033
-    },
-    {
-      "name": "test_current_user_menus[menus_success]",
-      "status": "passed",
-      "duration": 0.016044099999999784
-    },
-    {
-      "name": "test_department_list[departments_success]",
-      "status": "passed",
-      "duration": 0.014185899999999751
-    },
-    {
-      "name": "test_department_list[departments_noparams_success]",
-      "status": "passed",
-      "duration": 0.025478499999999737
-    },
-    {
-      "name": "test_delete_category_data[delete_category_success]",
-      "status": "passed",
-      "duration": 0.04055459999999966
+      "duration": 0.01639299999999988
     }
   ]
 }

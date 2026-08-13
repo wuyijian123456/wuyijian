@@ -1,0 +1,45 @@
+# 实习生列表
+
+
+get_intern_list_success:
+  url: "/api/ntern/info"
+  params:
+    skip: 0
+    limit: 20
+  expected_code: 200
+  expected_key: "items"
+  sql: "select * from intern_info"
+  sql_params: null
+
+get_intern_list_by_keyword_name:
+  url: "/api/ntern/info"
+  params:
+    skip: 0
+    limit: 20
+    keyword: "测试"
+  expected_code: 200
+  expected_key: "totalCount"
+  sql: "select * FROM intern_info WHERE school_name like %s"
+  sql_params: "测试"
+
+
+get_intern_list_by_keyword_schoolname:
+  url: "/api/ntern/info"
+  params:
+    skip: 0
+    limit: 20
+    keyword: "清华大学"
+  expected_code: 200
+  expected_key: "totalCount"
+  sql: "select * FROM intern_info WHERE school_name like %s"
+  sql_params: "清华大学"
+
+
+get_intern_info_by_id:
+  url: "/api/ntern/info/by-id"
+  params:
+    id: "{id}"
+  expected_code: 200
+  expected_key: "{id}"
+  sql: "select * from intern_info"
+  sql_params: null

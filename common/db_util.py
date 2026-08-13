@@ -114,6 +114,7 @@ class DBUtil:
             dict: 单条记录
         """
         result = self.query(sql, params)
+        log.info(f"查询到的数据是：{result}")
         return result[0] if result else None
 
     def count(self, table, condition="1=1", params=None):

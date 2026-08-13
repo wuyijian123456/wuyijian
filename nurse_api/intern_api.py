@@ -29,15 +29,15 @@ class InternManageApi:
 
 
 
-    def delete_intern_info(self,url,params):
-        log.info("编辑实习生人员列表信息")
-        resp = self.client.delete(url,params)
+    def delete_intern_info(self,url,params,json):
+        log.info("世界实习生人员列表信息")
+        resp = self.client.delete(url,params,json=json)
         return resp
 
 
 
 
-class InternRotatiobApi:
+class InternRotationApi:
 
     def __init__(self,client):
         self.client = client

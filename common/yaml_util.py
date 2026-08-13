@@ -1,14 +1,17 @@
 import yaml
-from config.env_config import DATA_DIR
+from config.env_config import DATA_DIR,PARAM_TEMPLATE_DIR
 from core.logger import log
 
 class YamlUtil:
     """YAML文件读写工具"""
     @staticmethod
-    def read_yaml(file_name):
+    def read_yaml(file_name,is_dir: bool = False):
         """读取YAML文件（默认从data目录读取）"""
         file_path = DATA_DIR / file_name
+        if is_dir:
+            file_path = PARAM_TEMPLATE_DIR / file_name
         try:
+
             with open(file_path, "r", encoding="utf-8") as f:
                 data = yaml.safe_load(f)
                 log.info(f"读取YAML文件成功：{file_path}")
@@ -31,9 +34,11 @@ class YamlUtil:
             raise
 
     @staticmethod
-    def write_yaml(file_name, data):
+    def write_yaml(file_name, data, is_dir: bool = False):
         """写入YAML文件"""
         file_path = DATA_DIR / file_name
+        if is_dir:
+            file_path = PARAM_TEMPLATE_DIR / file_name
         try:
             with open(file_path, "w", encoding="utf-8") as f:
                 yaml.safe_dump(data, f, ensure_ascii=False, indent=4)
@@ -44,3 +49,5 @@ class YamlUtil:
 
 # 全局实例
 yaml_util = YamlUtil()
+
+# print(yaml_util.read_yaml("intern_info_template.yaml",is_dir=True))

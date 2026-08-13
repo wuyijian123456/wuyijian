@@ -1,7 +1,7 @@
 from core.logger import log
 
 
-class User_api:
+class UserApi:
 
     def __init__(self,client):
         self.client = client

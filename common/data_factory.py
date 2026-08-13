@@ -193,8 +193,8 @@ class DataFactory:
 
         return {
             'name': DataFactory.random_name(),
-            'birthday': birth_date.isoformat(),
-            'id_card': id_card,
+            'birthDate': birth_date.isoformat(),
+            'idNumber': id_card,
             'age': age,
             'gender': gender
         }
@@ -305,7 +305,7 @@ class DataFactory:
         school= ['北京大学','清华大学','南京大学','复旦大学']
         major = ['解剖学','护理学','药剂学','麻醉学','中医学']
         return {
-            'school':random.choice(school),
+            'schoolName':random.choice(school),
             'major': random.choice(major)
         }
 
@@ -316,21 +316,26 @@ class DataFactory:
         return name
 
     @staticmethod
-    def random_name():
+    def random1_name():
         fake = Faker('zh_CN')
         name = fake.name()
         date = fake.date_of_birth(minimum_age=18, maximum_age=35).isoformat()
         profile = fake.simple_profile().get("birthdate")
-        print(profile)
         return {"name":name,"date":date}
+
+    @staticmethod
+    def intern_info():
+         return data_factory.random_name_birthday_and_id() | data_factory.random_school_major()
+
 
 # 全局实例
 data_factory = DataFactory()
 
 
-# a = data_factory.random_name_birthday_and_id()
-# b = data_factory.random_school_major()
-# c = data_factory.random_datetime()
-# print(data_factory.random_name())
+a = data_factory.random_name_birthday_and_id()
+b = data_factory.random_school_major()
+c = data_factory.random_datetime()
+
+
 
 
