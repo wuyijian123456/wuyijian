@@ -103,7 +103,7 @@ class ReportEnhancer:
             log.error(f"添加请求详情失败：{str(e)}")
     
     @staticmethod
-    def add_response_details(status_code, response_data):
+    def add_response_details(status_code, response_data=None):
         """
         添加响应详情到报告
         

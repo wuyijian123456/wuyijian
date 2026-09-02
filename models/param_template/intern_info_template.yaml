@@ -10,7 +10,7 @@ intern_info_params:
   major: null
   semester: null
   internStartDate: "2026-08-01T00:00:00"
-  internEndDate: "2026-08-31T00:00:00"
+  internEndDate: "2026-09-30T00:00:00"
   height: "176"
   phoneNumber: "18720091507"
   isSelfArranged: false

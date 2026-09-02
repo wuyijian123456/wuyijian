@@ -1,5 +1,5 @@
 get_intern_rotation_list_success:
-  url: "/api/ntern/rotation"
+  url: "/api/intern/rotation"
   params:
     skip: 0
     limit: 20
@@ -7,4 +7,31 @@ get_intern_rotation_list_success:
   expected_code: 200
   expected_key: "items"
   sql: "select * from intern_info"
+  sql_params: null
+
+
+add_intern_rotation_success:
+  url: "/api/intern/rotation"
+  params: null
+  expected_code: 200
+  expected_key: "items"
+  sql: "select * from intern_rotation_record where id = %s"
+  sql_params: null
+
+
+update_intern_rotation_success:
+  url: "/api/intern/rotation"
+  params: null
+  expected_code: 200
+  expected_key: "items"
+  sql: "select * from intern_rotation_record where id = %s"
+  sql_params: null
+
+
+delete_intern_rotation_success:
+  url: "/api/intern/rotation"
+  params: null
+  expected_code: 200
+  expected_key: "items"
+  sql: "delete from intern_rotation_record where id = %s"
   sql_params: null

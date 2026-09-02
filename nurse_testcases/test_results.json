@@ -1,0 +1,21 @@
+{
+  "environment": {
+    "env": "uat",
+    "retry_count": 0,
+    "base_url": "http://10.10.100.102:8090"
+  },
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "total_duration": 0.05
+  },
+  "test_cases": [
+    {
+      "name": "test_update_intern_rotation_info[add_intern_rotation_success]",
+      "status": "passed",
+      "duration": 0.04578860000000007
+    }
+  ]
+}

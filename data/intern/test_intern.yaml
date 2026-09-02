@@ -2,7 +2,7 @@
 
 
 get_intern_list_success:
-  url: "/api/ntern/info"
+  url: "/api/intern/info"
   params:
     skip: 0
     limit: 20
@@ -12,7 +12,7 @@ get_intern_list_success:
   sql_params: null
 
 get_intern_list_by_keyword_name:
-  url: "/api/ntern/info"
+  url: "/api/intern/info"
   params:
     skip: 0
     limit: 20
@@ -24,7 +24,7 @@ get_intern_list_by_keyword_name:
 
 
 get_intern_list_by_keyword_schoolname:
-  url: "/api/ntern/info"
+  url: "/api/intern/info"
   params:
     skip: 0
     limit: 20
@@ -36,10 +36,44 @@ get_intern_list_by_keyword_schoolname:
 
 
 get_intern_info_by_id:
-  url: "/api/ntern/info/by-id"
+  url: "/api/intern/info/by-id"
   params:
     id: "{id}"
   expected_code: 200
   expected_key: "{id}"
-  sql: "select * from intern_info"
+  sql: "select * from intern_info "
+  sql_params: null
+
+
+add_intern_info_success:
+  url: "/api/intern/info"
+  params: null
+  expected_code: 200
+  expected_key: "{id}"
+  sql: "select * from intern_info WHERE id = %s"
+  sql_params: null
+
+update_intern_info_success:
+  url: "/api/intern/info"
+  params: null
+  expected_code: 200
+  expected_key: "{id}"
+  sql: "select * from intern_info WHERE id = %s"
+  sql_params: null
+
+
+end_intern_info_success:
+  url: "/api/intern/info/end-internship"
+  params: null
+  expected_code: 200
+  expected_key: "{id}"
+  sql: "delete from intern_info WHERE id = %s"
+  sql_params: null
+
+end_two_intern_info_success:
+  url: "/api/intern/info/end-internship"
+  params: null
+  expected_code: 400
+  expected_key: "{id}"
+  sql: "delete from intern_info WHERE id = %s"
   sql_params: null

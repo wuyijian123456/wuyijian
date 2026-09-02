@@ -87,9 +87,9 @@ def api_client(env_config):
     username = env_config["username"]
     password = env_config["password"]
     timeout = env_config["timeout"]
-    cookie = env_config["cookie"]
+    Cookie = env_config["Cookie"]
     default_headers = env_config["default_headers"]
-    client = RequestHandler(base_url,username,password,timeout,cookie,default_headers)
+    client = RequestHandler(base_url,username,password,timeout,Cookie,default_headers)
     client.login_cookie()
     return client
 
@@ -110,7 +110,7 @@ def db_assert(db_client):
 # ==================== 全局 Fixture ====================
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function",autouse=True)
 def test_context(request):
     """测试上下文管理器"""
     test_name = request.node.name

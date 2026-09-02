@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pymysql
 from pymysql.cursors import DictCursor
 from core.logger import log
@@ -6,20 +8,31 @@ from core.logger import log
 class DBUtil:
     """数据库操作工具类"""
     _instance = None
-    def __new__(cls,env_config_mysql:dict):
+    def __new__(cls, env_config_mysql: dict):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            try:
-                cls._instance.conn = pymysql.connect(**env_config_mysql, charset="utf8mb4", autocommit=True)
-                cls._instance.cursor = cls._instance.conn.cursor(DictCursor)
-                log.info("数据库连接成功")
-            except Exception as e:
-                log.error(f"数据库连接失败：{str(e)}")
-                raise
         return cls._instance
 
-    def __init__(self, env_config_mysql:dict):
-        pass
+    def __init__(self, env_config_mysql: dict):
+        # 【核心】如果已经初始化过，直接跳过，防止重新连接覆盖原有连接
+        if hasattr(self, '_initialized') and self._initialized:
+            # 可选项：如果传入的配置和当前不同，打印警告（便于排查环境切换问题）
+            # if self._current_config != env_config_mysql:
+            #     log.warning("单例已初始化，忽略新的数据库配置")
+            return
+        # ---------- 首次初始化执行以下逻辑 ----------
+        try:
+            self.conn = pymysql.connect(**env_config_mysql,charset="utf8mb4",autocommit=True)
+            self.cursor = self.conn.cursor(DictCursor)
+            # 打上初始化标记，并保存当前配置（可选）
+            self._initialized = True
+            self._current_config = env_config_mysql
+            log.info("数据库连接成功")
+        except Exception as e:
+            log.error(f"数据库连接失败：{str(e)}")
+            # 如果连接失败，把标记置为 False，方便下次重试
+            self._initialized = False
+            raise
 
 
 
@@ -47,6 +60,10 @@ class DBUtil:
         log.debug(f"执行 SQL: {sql}, 参数：{params}")
         self.cursor.execute(sql, params or ())
         result = self.cursor.fetchall()
+        for row in result:
+            for key, value in row.items():
+                if isinstance(value, datetime):
+                    row[key] = value.strftime("%Y-%m-%d %H:%M:%S")
         log.debug(f"查询结果：{len(result)} 条记录")
         return result
 

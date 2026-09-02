@@ -1,4 +1,4 @@
-from pydantic import BaseModel,Field,validator
+from pydantic import BaseModel, Field, validator, Extra
 from typing import Annotated,Union,Any,List,Dict,Optional
 from datetime import datetime
 
@@ -24,9 +24,16 @@ class InternList(BaseModel):
     items: List[Any]
     totalCount: int
 
+class InternRotationResponse(BaseModel):
+    deptCode: str
+    id: str
+    internId: str
+    mentor: str
+    startDate: datetime = Field(..., description="开始日期")
+    endDate: datetime = Field(..., description="结束日期")
+
     class Config:
-        # 允许从属性或字典创建
-        from_attributes = True
+        extra = Extra.forbid
 
 
 class InternDetailResponse(BaseModel):

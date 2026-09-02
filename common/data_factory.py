@@ -164,6 +164,36 @@ class DataFactory:
         return random_date.strftime(fmt)
 
     @staticmethod
+    def random_date_scope(start_date=None, end_date=None, fmt="%Y-%m-%dT%H:%M:%S"):
+        """
+        生成随机日期fanwei
+
+        Args:
+            start_date (str/datetime): 开始日期
+            end_date (str/datetime): 结束日期
+            fmt (str): 日期格式
+
+        Returns:
+            str: 随机日期
+        """
+        if start_date is None:
+            start_date = datetime.now() - timedelta(days=365)
+        if end_date is None:
+            end_date = datetime.now()
+
+        if isinstance(start_date, str):
+            start_date = datetime.strptime(start_date, fmt)
+        if isinstance(end_date, str):
+            end_date = datetime.strptime(end_date, fmt)
+
+        delta = end_date - start_date
+        random_days = random.randint(0, delta.days)
+        random_start_date = start_date - timedelta(days=random_days)
+        random_end_date = start_date + timedelta(days=random_days)
+
+        return (random_start_date.strftime(fmt),random_end_date.strftime(fmt))
+
+    @staticmethod
     def random_name_birthday_and_id():
         """
         生成出生日期，并生成对应的身份证号（前6位+出生日期+顺序码+校验码）
@@ -328,13 +358,31 @@ class DataFactory:
          return data_factory.random_name_birthday_and_id() | data_factory.random_school_major()
 
 
+    def create_rotation_req_data(self,overrides=None):
+        start_date = datetime.now() + timedelta(days=30)
+        end_date = datetime.now() + timedelta(days=365)
+        rotation_req_model =  {
+            "id":'',
+            "internId":data_factory.random_uuid(),
+            "deptCode":"1042",
+            "mentor":"1234",
+            "startDate":start_date.strftime("%Y-%m-%dT%H:%M:%S"),
+            "endDate":end_date.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        if overrides:
+            rotation_req_model.update(overrides)
+
+        return rotation_req_model
+
+
 # 全局实例
 data_factory = DataFactory()
 
-
-a = data_factory.random_name_birthday_and_id()
-b = data_factory.random_school_major()
-c = data_factory.random_datetime()
+#
+# a = data_factory.random_name_birthday_and_id()
+# b = data_factory.random_school_major()
+# c = data_factory.create_rotation_req_data()
+# print(c)
 
 
 
