@@ -1,11 +1,10 @@
-import json
-
 from core.logger import log
 import pytest
 from common.data_factory import data_factory
 from common.params_set import deep_merge
 from common.yaml_util import yaml_util
 from nurse_api.intern_api import InternManageApi,InternRotationApi
+from nurse_api.training_personnel_api import TrainingPersonnelAPI
 from nurse_api.user_api import UserApi
 from nurse_api.dictionary_api import DictionaryApi, StatisticsApi, CategoryApi, CategoryItemApi
 
@@ -70,6 +69,11 @@ def category_api(api_client):
 @pytest.fixture()
 def category_item_api(api_client):
     return CategoryItemApi(api_client)
+
+
+@pytest.fixture()
+def training_personnel_api(api_client):
+    return TrainingPersonnelAPI(api_client)
 
 
 

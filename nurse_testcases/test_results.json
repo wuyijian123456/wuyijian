@@ -5,17 +5,92 @@
     "base_url": "http://10.10.100.102:8090"
   },
   "summary": {
-    "total": 1,
-    "passed": 1,
+    "total": 16,
+    "passed": 16,
     "failed": 0,
     "skipped": 0,
-    "total_duration": 0.05
+    "total_duration": 0.38
   },
   "test_cases": [
     {
-      "name": "test_update_intern_rotation_info[add_intern_rotation_success]",
+      "name": "test_create_personnel_with_full_fields",
       "status": "passed",
-      "duration": 0.04578860000000007
+      "duration": 0.038153299999999835
+    },
+    {
+      "name": "test_create_personnel_minimal",
+      "status": "passed",
+      "duration": 0.0492313000000002
+    },
+    {
+      "name": "test_update_personnel",
+      "status": "passed",
+      "duration": 0.05958970000000008
+    },
+    {
+      "name": "test_create_with_accommodation",
+      "status": "passed",
+      "duration": 0.04156840000000006
+    },
+    {
+      "name": "test_select_personnel[]",
+      "status": "passed",
+      "duration": 0.0070917999999999815
+    },
+    {
+      "name": "test_select_personnel[\\u5f20\\u4e09]",
+      "status": "passed",
+      "duration": 0.006164500000000128
+    },
+    {
+      "name": "test_select_personnel[\\u674e\\u56db]",
+      "status": "passed",
+      "duration": 0.006746300000000094
+    },
+    {
+      "name": "test_select_personnel[\\u738b\\u5efa\\u534e]",
+      "status": "passed",
+      "duration": 0.006851399999999952
+    },
+    {
+      "name": "test_invalid_phone",
+      "status": "passed",
+      "duration": 0.0006739000000002271
+    },
+    {
+      "name": "test_gender_values[\\u7537-\\u7537]",
+      "status": "passed",
+      "duration": 0.024443199999999887
+    },
+    {
+      "name": "test_gender_values[\\u5973-\\u5973]",
+      "status": "passed",
+      "duration": 0.021324700000000085
+    },
+    {
+      "name": "test_education_values[degree1]",
+      "status": "passed",
+      "duration": 0.021815499999999766
+    },
+    {
+      "name": "test_education_values[degree2]",
+      "status": "passed",
+      "duration": 0.0219526000000001
+    },
+    {
+      "name": "test_education_values[degree3]",
+      "status": "passed",
+      "duration": 0.02987440000000019
+    },
+    {
+      "name": "test_education_values[degree4]",
+      "status": "passed",
+      "duration": 0.02243290000000009
+    },
+    {
+      "name": "test_education_values[degree5]",
+      "status": "passed",
+      "duration": 0.0224479999999998
     }
   ]
 }

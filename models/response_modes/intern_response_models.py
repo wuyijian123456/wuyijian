@@ -69,6 +69,7 @@ class InternDetailResponse(BaseModel):
     class Config:
         # 允许从属性或字典创建
         from_attributes = True
+        extra = Extra.forbid
         # 设置日期序列化格式
         json_encoders = {
             datetime: lambda v: v.isoformat()

@@ -5,152 +5,32 @@
     "base_url": "http://10.10.100.102:8090"
   },
   "summary": {
-    "total": 28,
-    "passed": 28,
+    "total": 4,
+    "passed": 4,
     "failed": 0,
     "skipped": 0,
-    "total_duration": 0.84
+    "total_duration": 0.04
   },
   "test_cases": [
     {
-      "name": "test_current_user_permissions[dictionary_success]",
+      "name": "test_select_personnel[]",
       "status": "passed",
-      "duration": 0.03320880000000059
+      "duration": 0.020839900000000133
     },
     {
-      "name": "test_statistics_data[statistics_success]",
+      "name": "test_select_personnel[\\u5f20\\u4e09]",
       "status": "passed",
-      "duration": 0.025592000000000503
+      "duration": 0.006989599999999818
     },
     {
-      "name": "test_category_data[select_all_category_success]",
+      "name": "test_select_personnel[\\u53f6\\u65ed]",
       "status": "passed",
-      "duration": 0.03797150000000027
+      "duration": 0.007040099999999994
     },
     {
-      "name": "test_category_data[select_keyword_category_success]",
+      "name": "test_select_personnel[\\u4fe1\\u606f\\u6709\\u9650\\u516c\\u53f8]",
       "status": "passed",
-      "duration": 0.016182999999999836
-    },
-    {
-      "name": "test_add_category_data[add_category_success]",
-      "status": "passed",
-      "duration": 0.04562500000000025
-    },
-    {
-      "name": "test_update_category_data[update_category_success]",
-      "status": "passed",
-      "duration": 0.029940899999999715
-    },
-    {
-      "name": "test_add_category_item_data[add_category_item_success]",
-      "status": "passed",
-      "duration": 0.04376720000000045
-    },
-    {
-      "name": "test_update_category_item_data[update_category_item_success]",
-      "status": "passed",
-      "duration": 0.02350589999999997
-    },
-    {
-      "name": "test_get_category_item_data[get_category_item_success]",
-      "status": "passed",
-      "duration": 0.016499700000000672
-    },
-    {
-      "name": "test_delete_category_item_data[delete_category_item_success]",
-      "status": "passed",
-      "duration": 0.03947689999999948
-    },
-    {
-      "name": "test_get_intern_info[get_intern_list_success]",
-      "status": "passed",
-      "duration": 0.021652800000000028
-    },
-    {
-      "name": "test_get_intern_info_by_keyword[get_intern_list_by_keyword]",
-      "status": "passed",
-      "duration": 0.01911649999999998
-    },
-    {
-      "name": "test_get_intern_info_by_keyword[get_intern_list_by_keyword_schoolname]",
-      "status": "passed",
-      "duration": 0.026411000000000406
-    },
-    {
-      "name": "test_get_intern_info_by_id[get_intern_info_by_id]",
-      "status": "passed",
-      "duration": 0.01834219999999931
-    },
-    {
-      "name": "test_add_intern_info[add_intern_info_success]",
-      "status": "passed",
-      "duration": 0.050126500000000185
-    },
-    {
-      "name": "test_update_intern_info[update_intern_info_success]",
-      "status": "passed",
-      "duration": 0.030932400000000193
-    },
-    {
-      "name": "test_delete_intern_info[end_intern_info_success]",
-      "status": "passed",
-      "duration": 0.03304050000000025
-    },
-    {
-      "name": "test_two_delete_intern_info[end_two_intern_info_success]",
-      "status": "passed",
-      "duration": 0.04351600000000033
-    },
-    {
-      "name": "test_get_intern_rotation_info[get_intern_rotation_list_success]",
-      "status": "passed",
-      "duration": 0.013701499999999811
-    },
-    {
-      "name": "test_add_intern_rotation_info[add_intern_rotation_success]",
-      "status": "passed",
-      "duration": 0.03591010000000061
-    },
-    {
-      "name": "test_update_intern_rotation_info[update_intern_rotation_success]",
-      "status": "passed",
-      "duration": 0.05914400000000075
-    },
-    {
-      "name": "test_delete_intern_rotation_info[delete_intern_rotation_success]",
-      "status": "passed",
-      "duration": 0.059002400000000677
-    },
-    {
-      "name": "test_upload",
-      "status": "passed",
-      "duration": 0.013696699999999673
-    },
-    {
-      "name": "test_current_user_permissions[permissions_success]",
-      "status": "passed",
-      "duration": 0.011104399999999792
-    },
-    {
-      "name": "test_current_user_menus[menus_success]",
-      "status": "passed",
-      "duration": 0.015164399999999745
-    },
-    {
-      "name": "test_department_list[departments_success]",
-      "status": "passed",
-      "duration": 0.015108699999999864
-    },
-    {
-      "name": "test_department_list[departments_noparams_success]",
-      "status": "passed",
-      "duration": 0.020529999999999937
-    },
-    {
-      "name": "test_delete_category_data[delete_category_success]",
-      "status": "passed",
-      "duration": 0.04410009999999964
+      "duration": 0.007201099999999849
     }
   ]
 }

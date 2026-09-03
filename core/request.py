@@ -56,9 +56,8 @@ class RequestHandler:
             response = self.post(url='/api/identity/login?useCookies=true', headers=self.cookie,
                                 json={"email": self.username, "password":self.password},
                                 )
-            # 登录成功后，将响应中的 Set-Cookie 写入 session cookie jar
-            for name, val in response.cookies.items():
-                self.session.cookies.set(name, val, domain=self.base_url.replace("http://", "").replace("https://", ""))
+            self.session.headers.update({"Cookie":self.cookie})
+            log.info(self.session.headers)
             log.info("✅ cookie 获取成功")
         except Exception as e:
             log.info("---------------登录失败---------------")
